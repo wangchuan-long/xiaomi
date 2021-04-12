@@ -37,6 +37,15 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/search",
+      name: "Search",
+      component: () => import("../views/search"),
+      meta: {
+        title: "搜索",
+        showTab: false,
+      },
+    },
+    {
       path: "/category",
       name: "Category",
       component: () => import("../views/category"),
@@ -51,7 +60,7 @@ const router = new VueRouter({
       component: () => import("../views/cart"),
       meta: {
         title: "购物车",
-        showTab: true,
+        showTab: false,
       },
     },
     {
