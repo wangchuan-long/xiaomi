@@ -38,40 +38,40 @@ const router = new VueRouter({
                 showTab: true,
             },
             children: [{
-                    path: 'tuijian',
-                    name: 'Tuijian',
+                    path: "tuijian",
+                    name: "Tuijian",
                     component: () =>
-                        import ('../views/home/tuijian')
-                }, //重定向
-                {
-                    path: 'phone',
-                    name: 'Phone',
-                    component: () =>
-                        import ('../views/home/phone')
+                        import ("../views/home/tuijian"),
                 },
                 {
-                    path: 'zhineng',
-                    name: 'Zhineng',
+                    path: "phone",
+                    name: "Phone",
                     component: () =>
-                        import ('../views/home/zhineng')
+                        import ("../views/home/phone"),
                 },
                 {
-                    path: 'teleTv',
-                    name: 'TeleTv',
+                    path: "zhineng",
+                    name: "Zhineng",
                     component: () =>
-                        import ('../views/home/teleTv')
+                        import ("../views/home/zhineng"),
                 },
                 {
-                    path: 'family_use',
-                    name: 'Family_use',
+                    path: "teleTv",
+                    name: "TeleTv",
                     component: () =>
-                        import ('../views/home/family_use')
+                        import ("../views/home/teleTv"),
                 },
                 {
-                    path: 'computer',
-                    name: 'Computer',
+                    path: "family_use",
+                    name: "Family_use",
                     component: () =>
-                        import ('../views/home/computer')
+                        import ("../views/home/family_use"),
+                },
+                {
+                    path: "computer",
+                    name: "Computer",
+                    component: () =>
+                        import ("../views/home/computer"),
                 },
             ],
         },
@@ -129,6 +129,22 @@ const router = new VueRouter({
     ],
     linkActiveClass: "lac",
     linkExactActiveClass: "leac",
-})
+});
+
+//解决编程式路由往同一地址跳转时会报错的情况
+const originalPush = VueRouter.prototype.push;
+const originalReplace = VueRouter.prototype.replace;
+//push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+    if (onResolve || onReject)
+        return originalPush.call(this, location, onResolve, onReject);
+    return originalPush.call(this, location).catch((err) => err);
+};
+//replace
+VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+    if (onResolve || onReject)
+        return originalReplace.call(this, location, onResolve, onReject);
+    return originalReplace.call(this, location).catch((err) => err);
+};
 
 export default router;
