@@ -18,7 +18,7 @@
       <div class="custom-indicator">{{ current + 1 }}/4</div>
     </template>
 </van-swipe>
-  
+  <!-- ----------------------------- -->
   <div class="xx">
       <div class="price">
         <p>￥</p>
@@ -29,7 +29,13 @@
         <span>169</span>
       </div>
   </div>
+<!-- --------------------------------- -->
 
+    <div class="more">
+        <div class="yuji"><p>预计得11米全</p></div>
+        <div class="baoyou">想包邮</div>
+        <span>更多 ></span>
+    </div>
 
 
 
@@ -186,6 +192,22 @@ export default {
       margin-top: 5px;
       text-decoration:line-through;
     }
-   
-  
+
+   .more{
+   width: 90%;
+   height: 1.5rem;
+   background: #f6bfbc;
+
+   }
+   .more .yuji{
+   width: 3rem;
+   color: #ff461f;
+   border: 1px solid #ff461f;
+   }
+   .more baoyou{
+   width: 1.5rem;
+    color: #ff461f;
+   border: 1px solid #ff461f;
+   }
+
 </style>
