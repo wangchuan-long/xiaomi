@@ -1,5 +1,5 @@
 <template>
-    <div class='computer'>computer</div>
+    <div class='computer'></div>
 </template>
 
 <script>

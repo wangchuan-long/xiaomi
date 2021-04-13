@@ -7,8 +7,27 @@ import store from "./store";
 import VueRouter from 'vue-router'//引入 vue-router插件
 Vue.use(VueRouter)//全局使用此组件  用一下use
 Vue.use(Vant);
+// 引入懒加载
+import { Lazyload } from 'vant';
+Vue.use(Lazyload);
+// 引入Grid 宫格样式
+import { Grid, GridItem } from 'vant';
+Vue.use(Grid);
+Vue.use(GridItem);
+// 吸顶引入
+// import { Sticky } from 'vant';
+// Vue.use(Sticky);
+
+//vant :list 下拉刷新 加载更多 引入
+import { List } from 'vant';
+Vue.use(List);
+
 Vue.config.productionTip = false;
 
+// 注册时可以配置额外的选项
+Vue.use(Lazyload, {
+  lazyComponent: true,
+});
 new Vue({
   render: (h) => h(App),
   router,
