@@ -78,9 +78,20 @@ const router = new VueRouter({
                 showTab: true,
             },
         },
+
+        {
+            path: "/search",
+            name: "Search",
+            component: () =>
+                import ("../views/search"),
+            meta: {
+                title: "搜索",
+                showTab: false,
+            },
+        },
     ],
     linkActiveClass: "lac",
     linkExactActiveClass: "leac",
-});
+})
 
 export default router;
