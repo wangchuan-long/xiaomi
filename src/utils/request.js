@@ -39,3 +39,9 @@ export const get = (url, params) => instance.get(url, { params: params });
 
 // post请求
 export const post = (url, data) => instance.post(url, data);
+
+// delete请求
+export const del = (url, params) => instance.delete(url, { params: params });
+
+// put请求
+export const put = (url, params) => instance.put(url, { params: params });
