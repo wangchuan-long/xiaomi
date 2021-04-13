@@ -1,5 +1,5 @@
 <template>
-    <div class='phone'>手机</div>
+    <div class='phone'></div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <div class='teleTv'>teleTv</div>
+    <div class='teleTv'></div>
 </template>
 
 <script>
