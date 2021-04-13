@@ -56,7 +56,8 @@ export default {
         Toast.success('登录成功');
         setToken(result.data.token);
         this.$router.push('/')
-
+        console.log(this.userName);
+        localStorage.setItem('userName',this.userName);
       }
     },
   },

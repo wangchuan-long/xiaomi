@@ -6,7 +6,8 @@
       </div>
       <div class="register">
         <router-link :to="{name:'Login'}" tag="div">
-          <span >登录/注册</span>
+          <span v-if="!userName"> 登录/注册</span>
+          <span v-if="userName">{{userName}}</span>
         </router-link>
       </div>
     </div>
@@ -44,13 +45,17 @@
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      userName:'',
+    };
   },
   computed: {},
   watch: {},
 
   methods: {},
-  created() {},
+  created() {
+    this.userName = localStorage.getItem('userName')
+  },
   
 };
 </script>
