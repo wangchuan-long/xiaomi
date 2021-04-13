@@ -4,7 +4,8 @@ import Vant from "vant";
 import router from "./router";
 import "vant/lib/index.css";
 import store from "./store";
-
+import VueRouter from 'vue-router'//引入 vue-router插件
+Vue.use(VueRouter)//全局使用此组件  用一下use
 Vue.use(Vant);
 Vue.config.productionTip = false;
 

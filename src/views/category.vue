@@ -1,43 +1,53 @@
 <template>
-  <div class=''>
-     <router-link :to="{name:'detail'}">ooooooo</router-link>
+  <div class="category">
+    <ul>
+      <li v-for="item in products" :key="item._id" @click="loadDetail(item._id)">
+        <img :src="item.image" alt="">
+        <span>{{item.name}}</span>
+      </li>
+      <!-- <router-link :to="{name:'detail',query:{id:item.id}}" v-for="item in products" :key="item._id" @click="loadDetail(item._id)">
+        <img :src="item.image" alt="">
+        <span>{{item.name}}</span>
+     </router-link> -->
+    </ul>
+    <div class="zw">
+
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    components: {
-
+import {reqProducts} from '../api/product'
+export default {
+  components: {},
+  data() {
+    return {
+      products:[],
+    };
+  },
+  computed: {},
+  methods: {
+    async loadProduct(){
+      const res = await reqProducts();
+      console.log(res);
+      this.products = res.data.products;
     },
-    data () {
-      return {
-
-      };
-    },
-    computed: {
-
-    },
-    watch: {
-
-    },
-    methods: {
-        
-    },
-    created() {
-
-},
-    mounted() {
-
-},
-beforeCreate() {}, //生命周期 - 创建之前
-beforeMount() {}, //生命周期 - 挂载之前
-beforeUpdate() {}, //生命周期 - 更新之前
-updated() {}, //生命周期 - 更新之后
-beforeDestroy() {}, //生命周期 - 销毁之前
-destroyed() {}, //生命周期 - 销毁完成
-activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
-  }
+    loadDetail(id){
+      this.$router.push({
+        name:'Detail',
+        query: {
+						id,
+					},
+     })
+   }
+  },
+  created() {
+    this.loadProduct()
+  },
+};
 </script>
-
-<style  scoped>
+<style scoped>
+.zw{
+  height: 3rem;
+}
 </style>

@@ -37,6 +37,43 @@ const router = new VueRouter({
                 title: "首页",
                 showTab: true,
             },
+            children: [{
+                    path: 'tuijian',
+                    name: 'Tuijian',
+                    component: () =>
+                        import ('../views/home/tuijian')
+                }, //重定向
+                {
+                    path: 'phone',
+                    name: 'Phone',
+                    component: () =>
+                        import ('../views/home/phone')
+                },
+                {
+                    path: 'zhineng',
+                    name: 'Zhineng',
+                    component: () =>
+                        import ('../views/home/zhineng')
+                },
+                {
+                    path: 'teleTv',
+                    name: 'TeleTv',
+                    component: () =>
+                        import ('../views/home/teleTv')
+                },
+                {
+                    path: 'family_use',
+                    name: 'Family_use',
+                    component: () =>
+                        import ('../views/home/family_use')
+                },
+                {
+                    path: 'computer',
+                    name: 'Computer',
+                    component: () =>
+                        import ('../views/home/computer')
+                },
+            ],
         },
         {
             path: "/category",
@@ -49,10 +86,10 @@ const router = new VueRouter({
             },
         },
         {
-            path: "/Detail",
-            name: "detail",
+            path: "/detail",
+            name: "Detail",
             component: () =>
-                import ("../views/list/Detail.vue"),
+                import ("../views/detail"),
             meta: {
                 title: "列表",
                 showTab: false,

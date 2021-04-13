@@ -1,28 +1,31 @@
 <template>
-  <div id="list">
-   
-    <van-swipe class="lb" @change="onChange" :autoplay=2000>
-      <template class="black">
+
+  <div id="list" v-if="obj">
+     <template class="black">
         <van-icon  name="arrow-left" />
       </template>
 
       <template class="fx">
         <van-icon name="upgrade" />
       </template>
-     
-        <!-- <van-swipe-item><img src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/11efb7db462b4b505b0f261a39d017a3.jpg" alt=""></van-swipe-item>
-        <van-swipe-item><img src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/6a906e742c66dc34063cad162209a114.jpg" alt=""></van-swipe-item>
-        <van-swipe-item><img src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/3000d452b7c58a336889b85088f989f4.jpg" alt=""></van-swipe-item>
-        <van-swipe-item><img src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/cd3ae3ba3065f9c1b786c45156b1872b.jpg" alt=""></van-swipe-item> -->
+    <van-swipe class="lb" @change="onChange" :autoplay=2000>
+    
+        <van-swipe-item><img :src="obj.image" alt=""></van-swipe-item>
+        <van-swipe-item><img :src="obj.image" alt=""></van-swipe-item>
+        <van-swipe-item><img :src="obj.image" alt=""></van-swipe-item>
+        <van-swipe-item><img :src="obj.image" alt=""></van-swipe-item>
     <template #indicator>
       <div class="custom-indicator">{{ current + 1 }}/4</div>
     </template>
-</van-swipe>
+
+   
+    </van-swipe>
+
   <!-- ----------------------------- -->
   <div class="xx">
       <div class="price">
         <p>￥</p>
-        <span>99</span>
+        <span>{{obj.price}}</span>
       </div>
       <div class="oldprice">
         <p>￥</p>
@@ -33,16 +36,27 @@
 
     <div class="more">
         <div class="yuji"><p>预计得11米全</p></div>
-        <div class="baoyou">想包邮</div>
+        <div class="baoyou"> <p>想包邮</p> </div>
         <span>更多 ></span>
+    </div>
+
+<!-- ---------------------------------- -->
+    <div class="xinxi">
+      <h3>{{obj.name}}</h3>
+      <p> <b>①</b> &nbsp;&nbsp;&nbsp;智能设备控制</p>
+      <p>②&nbsp;&nbsp;&nbsp;人工智能语音对话</p>
+      <p>③&nbsp;&nbsp;&nbsp;蓝牙mesh网关</p>
     </div>
 
 
 
-  <van-goods-action>
-  <van-goods-action-icon icon="wap-home-o" text="首页" @click="onClickIcon" />
+
+
+<!-- ---------------------------------- -->
+  <van-goods-action >
+  <van-goods-action-icon to="/"  loading="true" icon="wap-home-o" text="首页" @click="onClickIcon" />
   <van-goods-action-icon icon="service-o" text="客服" @click="onClickIcon" />
-  <van-goods-action-icon icon="shop-o" text="购物车" badge="5" @click="onClickIcon" />
+  <van-goods-action-icon to="Cart" icon="shop-o" text="购物车" badge="5" @click="onClickIcon" />
   
   <van-goods-action-button
     type="danger"
@@ -59,6 +73,12 @@ import { Lazyload } from 'vant';
 import { Icon } from 'vant';
 import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
 import { Toast } from 'vant';
+import {reqProductDetail} from '../../api/product'
+
+
+
+
+
 
 Vue.use(Icon);
 Vue.use(Lazyload);
@@ -67,11 +87,13 @@ Vue.use(GoodsActionButton);
 Vue.use(GoodsActionIcon);
 
 
+
 export default {
   components: {},
   data() {
     return {
        current: 0,
+       obj:null,
     };
   },
   computed: {},
@@ -82,15 +104,30 @@ export default {
       this.current = index;
     },
      onClickIcon() {
-      Toast('点击图标');
+     console.log(Toast)
     },
+
     onClickButton() {
-      Toast('点击按钮');
+      
     },
     
+    async initDate(id){
+        const result =await reqProductDetail(id);
+        console.log(result);
+        if(result.status===200){
+          this.obj=result.data
+        }
+    
+    }
 
   },
-  created() {},
+  created() {
+     const id= this.$route.query.id;
+     console.log(id)
+     this.initDate(id);
+     
+
+  },
   mounted() {},
   beforeCreate() {},
   beforeMount() {},
@@ -99,6 +136,7 @@ export default {
 };
 </script>
 <style scoped>
+
    .custom-indicator {
     position: absolute;
     right: 5px;
@@ -116,9 +154,7 @@ export default {
     border-radius: 50%;
     text-align: center;
     line-height: 40px;
-    position: absolute ;
-    left: 20px;
-    top: 10px;
+    
     font-size: 18px;
     color:whitesmoke;
     background: rgba(0, 0, 0, 0.2);
@@ -129,19 +165,34 @@ export default {
     border-radius: 50%;
     text-align: center;
     line-height: 40px;
-    position: absolute;
-    left:355px;
-    top: 10px;
+    
     font-size: 18px;
     color:whitesmoke;
     background: rgba(0, 0, 0, 0.2);
   
   }
+
+ .van-icon-arrow-left[data-v-070ef5d8]{
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    z-index: 999;
+  }
+
+.van-icon-upgrade[data-v-070ef5d8]{
+  position: absolute;
+    right: 30px;
+    top: 30px;
+    z-index: 999;
+}
   .lb{
       width: 100%;
       height: 26rem;
-      background: pink;
+      float: left;
   }
+ 
+
+  
   .lb img{
   width: 100%;
   height: 100%;
@@ -149,25 +200,26 @@ export default {
   .xx{
     width: 90%;
     height: 35px;
-    background: yellow;
     margin-left:5%;
     padding-top: 5px;
   }
   .price{
     float: left;
-    width: 3.5rem;
+    width: 4rem;
     height: 2rem;
-    
-    
+    margin-top: 14px;
+    padding-bottom: 5px;
+    font-weight: 600;
   }
   p{
       float: left;
-      font-size: 1rem;
+      font-size: 16px;
       color: orangered;
+      
     }
   span{
     float: left;
-    font-size: 2rem;
+    font-size: 21px;
       color: orangered;
     }
     
@@ -195,19 +247,72 @@ export default {
 
    .more{
    width: 90%;
-   height: 1.5rem;
+   height: 2rem;
    background: #f6bfbc;
-
+   float: left;
+   border-radius: 3px;
+   opacity: .8;
+   margin-left: 5%;
+   }
+   .more p{
+    color: #ff461f;
+    font-size: 8px;
+    line-height: 15px;
+    
    }
    .more .yuji{
-   width: 3rem;
-   color: #ff461f;
+   width: 4.8rem;
+   height: 15px;
+   
    border: 1px solid #ff461f;
+   border-radius: 3px;
+   float: left;
+   margin-left: 15px;
+   margin-top: 10px;
+   text-align: center;
    }
-   .more baoyou{
-   width: 1.5rem;
-    color: #ff461f;
+   .more .baoyou{
+   width: 2.3rem;
+   border-radius: 3px;
+   margin-left: 5px;
+   margin-top: 10px;
    border: 1px solid #ff461f;
+   float: left;
+   
    }
 
+   .more span{
+    display: block;
+    float: right;
+    font-size: 12px;
+    margin-top: 12px;
+    margin-right: 10px;
+   }
+
+  
+   .xinxi{
+      width: 90%;
+      height: 5.2rem;
+      
+      float: left;
+      margin-left: 5%;
+      margin-top: 10px;
+   }
+   .xinxi h3{
+     width: 90%;
+     height: 25px;
+    line-height: 25px;
+     float: left;
+     font-weight: 600;
+   }
+     .xinxi p{
+      width: 90%;
+      height: 20px;
+      line-height: 20px;
+     float: left;
+     font-size: 6px;
+     color: black;
+     }
+     
+     
 </style>
