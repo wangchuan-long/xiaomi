@@ -10,7 +10,7 @@
       <div class="list">
         <ul>
           <li v-for="item in productsArr" :key="item._id">
-            <p>{{item}}</p>
+            <p>{{ item }}</p>
           </li>
         </ul>
       </div>
@@ -18,95 +18,89 @@
 
     <div class="maskBox" @touchmove.prevent>
       <div class="right">
-          <div class="shop">
-            <div v-for="item in products" :key="item._id" class="shopList" @touchmove.prevent @click="loadDetail(item._id)">
-              <img :src="item.image" alt="">
-              <p>{{item.name}}</p>
-            </div>
+        <div class="shop">
+          <div
+            v-for="item in products"
+            :key="item._id"
+            class="shopList"
+            @touchmove.prevent
+            @click="loadDetail(item._id)"
+          >
+            <img :src="item.image" alt="" />
+            <p>{{ item.name }}</p>
           </div>
+        </div>
       </div>
     </div>
 
-
-    <div class="zw"> 
-
-    </div>
+    <div class="zw"></div>
   </div>
 </template>
 
 <script>
-import {reqProducts} from '../api/product'
+import { reqProducts } from "../api/product";
 export default {
   components: {},
   data() {
     return {
-      products:[],
-      productsArr:[],
+      products: [],
+      productsArr: [],
     };
   },
   computed: {},
   methods: {
-    async loadProduct(){
-      const res = await reqProducts({per:107});
-      console.log(res);
+    async loadProduct() {
+      const res = await reqProducts({ per: 107 });
       this.products = res.data.products;
-      console.log(this.products);
 
       this.products.forEach((v) => {
-          if (this.productsArr.some((it) => it == v.category.name) == false) {
-            this.productsArr.unshift(v.category.name);
-          }
-        });
-        console.log(this.productsArr);
-      // this.productsArr = this.unique()
+        if (this.productsArr.some((it) => it == v.category.name) == false) {
+          this.productsArr.unshift(v.category.name);
+        }
+      });
     },
-    loadDetail(id){
+    loadDetail(id) {
       this.$router.push({
-        name:'Detail',
+        name: "Detail",
         query: {
-						id,
-					},
-      })
+          id,
+        },
+      });
     },
-    
-    // unique(arr){
-    //   const res = new Map();
-    //   return this.products.filter((products)=>!res.has(products.data.name) && res.set(products.data.name, '小爱音箱'));
-    // },
   },
   created() {
     this.loadProduct();
-    // this.unique();
   },
 };
 </script>
 <style scoped>
-html,body{
+html,
+body {
   position: relative;
 }
-.zw{
+.zw {
   height: 4rem;
   width: 100%;
   position: absolute;
   bottom: 0;
 }
-.left{
+.left {
   float: left;
   width: 6rem;
   height: 35rem;
-  background-color:white;
+  background-color: white;
   position: fixed;
 }
-.left ul{
-  padding-top: 3rem;  
+.left ul {
+  padding-top: 3rem;
 }
-.left ul li{
+.left ul li {
   height: 3 rem;
   text-align: center;
   line-height: 3rem;
   background-color: white;
 }
-.right{
+.right {
   float: right;
   width: 19rem;
   height: 42.5rem;
@@ -115,17 +109,17 @@ html,body{
 
   padding-bottom: 5rem;
 }
-.shop{
+.shop {
   width: 19rem;
   min-height: 63rem;
   background-color: white;
   display: flex;
   flex-direction: row;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   text-align: center;
   justify-content: space-around;
 }
-.shopList{
+.shopList {
   width: 8rem;
   height: 9rem;
   padding-bottom: 3rem;

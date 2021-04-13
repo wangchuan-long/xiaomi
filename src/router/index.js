@@ -36,13 +36,43 @@ const router = new VueRouter({
             meta: {
                 title: "首页",
                 showTab: true,
-            }, children: [
-              { path: 'tuijian', name: 'Tuijian',  component: () => import('../views/home/tuijian') },//重定向
-              { path: 'phone', name: 'Phone', component: () => import('../views/home/phone') },
-              { path: 'zhineng', name: 'Zhineng', component: () => import('../views/home/zhineng') },
-              { path: 'teleTv', name: 'TeleTv', component: () => import('../views/home/teleTv') },
-              { path: 'family_use', name: 'Family_use', component: () => import('../views/home/family_use') },
-              { path: 'computer', name: 'Computer', component: () => import('../views/home/computer') },
+            },
+            children: [{
+                    path: "tuijian",
+                    name: "Tuijian",
+                    component: () =>
+                        import ("../views/home/tuijian"),
+                },
+                {
+                    path: "phone",
+                    name: "Phone",
+                    component: () =>
+                        import ("../views/home/phone"),
+                },
+                {
+                    path: "zhineng",
+                    name: "Zhineng",
+                    component: () =>
+                        import ("../views/home/zhineng"),
+                },
+                {
+                    path: "teleTv",
+                    name: "TeleTv",
+                    component: () =>
+                        import ("../views/home/teleTv"),
+                },
+                {
+                    path: "family_use",
+                    name: "Family_use",
+                    component: () =>
+                        import ("../views/home/family_use"),
+                },
+                {
+                    path: "computer",
+                    name: "Computer",
+                    component: () =>
+                        import ("../views/home/computer"),
+                },
             ],
         },
         {
@@ -56,10 +86,10 @@ const router = new VueRouter({
             },
         },
         {
-            path: "/Detail",
-            name: "detail",
+            path: "/detail",
+            name: "Detail",
             component: () =>
-                import ("../views/list/Detail.vue"),
+                import ("../views/detail"),
             meta: {
                 title: "列表",
                 showTab: false,
@@ -99,6 +129,22 @@ const router = new VueRouter({
     ],
     linkActiveClass: "lac",
     linkExactActiveClass: "leac",
-})
+});
+
+//解决编程式路由往同一地址跳转时会报错的情况
+const originalPush = VueRouter.prototype.push;
+const originalReplace = VueRouter.prototype.replace;
+//push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+    if (onResolve || onReject)
+        return originalPush.call(this, location, onResolve, onReject);
+    return originalPush.call(this, location).catch((err) => err);
+};
+//replace
+VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+    if (onResolve || onReject)
+        return originalReplace.call(this, location, onResolve, onReject);
+    return originalReplace.call(this, location).catch((err) => err);
+};
 
 export default router;

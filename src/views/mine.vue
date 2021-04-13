@@ -2,7 +2,7 @@
   <div class="mine">
     <div class="header">
       <div class="img">
-        <img src="../img/touxiang.png" alt="">
+        <img src="../img/touxiang.png" alt="" />
       </div>
       <div class="register">
         <router-link :to="{name:'Login'}" tag="div">
@@ -15,22 +15,22 @@
 
     <div class="collist">
       <van-row>
-      <van-col span="8">
-        <van-icon name="pending-payment" />
-        <br>
-        <span>待付款</span>
-      </van-col>
-      <van-col span="8">
-        <van-icon name="logistics" />
-        <br>
-        <span>待收货</span>
-      </van-col>
-      <van-col span="8">
-        <van-icon name="description" />
-        <br>
-        <span>退换修</span>
-      </van-col>
-    </van-row>
+        <van-col span="8">
+          <van-icon name="pending-payment" />
+          <br />
+          <span>待付款</span>
+        </van-col>
+        <van-col span="8">
+          <van-icon name="logistics" />
+          <br />
+          <span>待收货</span>
+        </van-col>
+        <van-col span="8">
+          <van-icon name="description" />
+          <br />
+          <span>退换修</span>
+        </van-col>
+      </van-row>
     </div>
     <div class="zw"></div>
     <van-cell title="会员中心" is-link to="index" value="" />
@@ -60,40 +60,39 @@ export default {
 };
 </script>
 <style scoped>
-
-.header{
+.header {
   width: 100%;
   height: 5.5rem;
   background-color: orange;
   position: relative;
 }
-img{
+img {
   width: 4rem;
   height: 4rem;
   margin-top: 0.8rem;
   margin-left: 0.8rem;
 }
-.register{
+.register {
   position: absolute;
   left: 5rem;
   top: 2.5rem;
   color: white;
 }
-.van-cell{
-border-bottom: solid 1px gray;
-font-size: 1rem;
+.van-cell {
+  border-bottom: solid 1px gray;
+  font-size: 1rem;
 }
-.collist{
+.collist {
   height: 5rem;
 }
-.van-icon{
+.van-icon {
   font-size: 2rem;
 }
-.van-col{
+.van-col {
   margin-top: 1rem;
   text-align: center;
 }
-.zw{
+.zw {
   width: 100%;
   height: 0.4rem;
   background-color: rgb(214, 214, 214);

@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <van-tabbar v-model="active" active-color="#ff6700">
+    <van-tabbar v-model="active" active-color="#ff6700" @change="onChange">
       <van-tabbar-item to="/home" icon="home-o">主页</van-tabbar-item>
       <van-tabbar-item to="/category" icon="search">分类</van-tabbar-item>
       <van-tabbar-item to="/cart" icon="shopping-cart-o"
@@ -21,22 +21,16 @@ export default {
   },
   computed: {},
   watch: {
-    // 监听路由
-    "$route.path": function(newVal) {
-      // console.log(newVal, oldVal);
-      if (newVal === "/home") {
-        this.active = 0;
-      } else if (newVal === "/category") {
-        this.active = 1;
-      } else if (newVal === "/cart") {
-        this.active = 2;
-      } else if (newVal === "/mine") {
-        this.active = 3;
-      }
+    "$store.state.active": function () {
+      this.active = this.$store.getters.getActive;
     },
   },
 
-  methods: {},
+  methods: {
+    onChange(index) {
+      this.$store.commit("setActive", index);
+    },
+  },
   created() {},
   mounted() {},
   beforeCreate() {},
@@ -46,5 +40,7 @@ export default {
 };
 </script>
 <style scoped>
-.footer{position: relative;}
+.footer {
+  position: relative;
+}
 </style>
