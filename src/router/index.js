@@ -78,8 +78,8 @@ const router = new VueRouter({
       },
     },
     {
-      path: "/Detail",
-      name: "detail",
+      path: "/detail",
+      name: "Detail",
       component: () => import("../views/detail"),
       meta: {
         title: "列表",

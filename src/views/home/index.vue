@@ -1,6 +1,5 @@
 <template>
-  <div class="home" style="padding-bottom:40px">
-    
+  <div class="home" style="padding-bottom: 40px">
     <div class="top_dh">
       <img
         src="https://s02.mifile.cn/assets/static/image/logo-mi2.png"
@@ -57,61 +56,61 @@
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/cb65daec7ef7b52cc785f88f78efba37.png?w=216&h=228&bg=FDF1E6"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//i8.mifile.cn/v1/a1/eb5024fe-dfe3-6e53-3e18-675bef5fa06e.webp?w=216&h=228&bg=EAF6FD"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3a28a43e0599110b5f4370be43e7e75e.jpg?f=webp&w=216&h=228&bg=FFFFFF"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//i8.mifile.cn/v1/a1/e8bc849a-0a3b-21a0-6810-7da3a3903dee.webp?w=216&h=228&bg=FDEFDE"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/0434594382110f3bd15c90f040d5d542.jpg?f=webp&w=216&h=228&bg=FFFFFF"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/64f3988b6216e4c1ab62a7f50df3e816.png?f=webp&w=216&h=228&bg=FFFFFF"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ea68dee2bfa0e55a82236b0d968e975.png?w=216&h=228&bg=FCEAEA"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/96c780016ea196743905dc93f9249c39.png?w=216&h=228&bg=FDF5E5"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9425031cdd7af22d9a23a5ae16d1f57c.jpg?f=webp&w=216&h=228&bg=FFFFFF"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/f11f9df6b0b0b428f8c8fc3267131830.png?w=216&h=228&bg=FDEDE8"
-          style="width:65px; height: 65px;"
+          style="width: 65px; height: 65px"
         />
       </van-grid-item>
     </van-grid>
@@ -204,7 +203,10 @@ export default {
       }
     },
     godetail(id) {
-      this.$router.push({ path: `/detail/${id}` });
+      this.$router.push({
+        name: "Detail",
+        query: { id },
+      });
     },
   },
   created() {

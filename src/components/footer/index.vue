@@ -21,17 +21,22 @@ export default {
   },
   computed: {},
   watch: {
+    // 监听vuex中active的数据变化
     "$store.state.active": function () {
       this.active = this.$store.getters.getActive;
     },
   },
 
   methods: {
+    // 切换时存入vuex中active
     onChange(index) {
       this.$store.commit("setActive", index);
     },
   },
-  created() {},
+  created() {
+    // 创建时获取acitve中数据
+    this.active = this.$store.getters.getActive;
+  },
   mounted() {},
   beforeCreate() {},
   beforeMount() {},
