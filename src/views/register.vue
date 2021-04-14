@@ -4,18 +4,11 @@
       title="注册小米账号"
       left-text="返回"
       left-arrow
-      
       @click-left="onClickLeft"
     />
     <div class="reg">
       <van-uploader :after-read="afterRead" v-if="!avatar" />
-      <img :src="avatar" alt="" width="90rem" height="90rem" v-else>
-      <!-- <br>
-      <input type="text" placeholder="nickName" v-model="nickName">
-      <input type="text" placeholder="userName" v-model="userName">
-      <input type="text" placeholder="password" v-model="password">
-      <button @click="registers">注册</button> -->
-
+      <img :src="avatar" alt="" width="90rem" height="90rem" v-else />
 
       <van-form @submit="onSubmit">
         <van-field
@@ -40,7 +33,9 @@
           :rules="[{ required: true, message: '请填写密码' }]"
         />
 
-          <van-button round block type="info" native-type="submit">注册</van-button>
+        <van-button round block type="info" native-type="submit"
+          >注册</van-button
+        >
       </van-form>
       <div class="foo">
         <p>已阅读并同意小米帐号 用户协议隐私政策</p>
@@ -50,51 +45,52 @@
 </template>
 
 <script>
-import {reqReg} from '../api/user'
+import { reqReg } from "../api/user";
 export default {
   components: {},
   data() {
     return {
-      avatar:'',
-      nickName:'',
-      userName:'',
-      password:'',
+      avatar: "",
+      nickName: "",
+      userName: "",
+      password: "",
     };
   },
   computed: {},
   methods: {
+    // 上传头像 此时可以自行将文件上传至服务器
     afterRead(file) {
-      // 此时可以自行将文件上传至服务器
       console.log(file);
-      this.avatar = file.content
+      this.avatar = file.content;
     },
-    async onSubmit(values){
-      const result = await reqReg({...values,avatar:this.avatar,})
+    // 注册
+    async onSubmit(values) {
+      const result = await reqReg({ ...values, avatar: this.avatar });
       console.log(result);
-      if(result.status === 200){
-        this.$router.replace({name:'Login'})
-      } 
+      if (result.status === 200) {
+        this.$router.replace("/login");
+      }
     },
-    onClickLeft(){
-      this.$router.push('Login')
-    }
+    // 返回登录页面
+    onClickLeft() {
+      this.$router.replace("/login");
+    },
   },
-  created() {
-
-  },
+  created() {},
 };
 </script>
 <style scoped>
-html{
+html {
   width: 100%;
   height: 100%;
   font-size: 12px;
 }
-.reg{
+.reg {
   margin-top: 5rem;
-  text-align:center;vertical-align:middel
+  text-align: center;
+  vertical-align: middel;
 }
-.van-field__control{
+.van-field__control {
   width: 10rem;
   height: 4rem;
   border-radius: 1rem;
@@ -102,14 +98,14 @@ html{
   margin: 1rem auto;
   background-color: gray;
 }
-button{
+button {
   width: 15rem;
   height: 3rem;
   background-color: rgba(15, 191, 214, 0.4);
-  border-radius:5rem;
+  border-radius: 5rem;
   margin-left: 5.5rem;
 }
-.foo p{
+.foo p {
   margin-top: 7rem;
 }
 </style>

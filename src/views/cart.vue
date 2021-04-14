@@ -1,32 +1,13 @@
 <template>
   <div class="cart">
-    <van-nav-bar fixed title="购物车" left-text="" class="van-ellipsis">
+    <van-nav-bar fixed title="购物车" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="fanhui" />
+        <van-icon name="arrow-left" size="30" @click="back" />
       </template>
       <template #right>
         <van-icon name="search" size="30" @click="search" />
       </template>
     </van-nav-bar>
-    <!-- <div>
-      <van-checkbox v-model="checked" checked-color="#ff6700"></van-checkbox>
-      <van-card
-        num="2"
-        price="2.00"
-        desc="描述信息"
-        title="商品标题"
-        thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-      >
-        <template #tags>
-          <van-tag plain type="danger">标签</van-tag>
-          <van-tag plain type="danger">标签</van-tag>
-        </template>
-        <template #footer>
-          <van-button size="mini">按钮</van-button>
-          <van-button size="mini">按钮</van-button>
-        </template>
-      </van-card>
-    </div> -->
     <div class="cart-list">
       <ul>
         <li class="plist">
@@ -123,11 +104,13 @@ export default {
   watch: {},
 
   methods: {
-    fanhui() {
-      history.back(); //返回历史页面
+    // 返回
+    back() {
+      this.$router.go(-1);
     },
+    // 搜索
     search() {
-      this.$router.push("/search"); //路由跳转到搜索
+      this.$router.push("/search");
     },
     onSubmit() {},
     goOn() {
@@ -293,7 +276,7 @@ export default {
 }
 .bottom-submit {
   position: fixed;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   right: 0;
   background: #fff;
