@@ -31,12 +31,10 @@ export default {
   },
 
   methods: {
+    // 存入vuex中
     setActive(num) {
       this.$store.commit("setActive", num);
     },
-  },
-  created() {
-    // console.log(this.$route);
   },
 };
 </script>
