@@ -8,53 +8,36 @@
         <van-icon name="search" size="30" @click="search" />
       </template>
     </van-nav-bar>
-    <!-- <div>
-      <van-checkbox v-model="checked" checked-color="#ff6700"></van-checkbox>
-      <van-card
-        num="2"
-        price="2.00"
-        desc="描述信息"
-        title="商品标题"
-        thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-      >
-        <template #tags>
-          <van-tag plain type="danger">标签</van-tag>
-          <van-tag plain type="danger">标签</van-tag>
-        </template>
-        <template #footer>
-          <van-button size="mini">按钮</van-button>
-          <van-button size="mini">按钮</van-button>
-        </template>
-      </van-card>
-    </div> -->
+
     <div class="cart-list">
       <ul>
-        <li class="plist">
+        <li class="plist" v-for="item in cartproducts" :key="item._id">
           <div class="plist-t">
             <van-checkbox
-              v-model="checked"
+              v-model="item.checked"
               checked-color="#ff6700"
               class="checked"
             ></van-checkbox>
-            <p class="imgp"></p>
+            <p class="imgp" @click="loadDetail(item.product._id)">
+              <img :src="item.product.image" alt="" />
+            </p>
             <div class="info">
-              <h3>小米小爱音响pro黑色</h3>
-              <p>售价：<span>299</span>元</p>
+              <h3>{{ item.product.name }}</h3>
+              <p>
+                售价：<span>{{ item.product.price }}</span
+                >元
+              </p>
               <div class="shanjian">
-                <van-button
-                  icon="minus"
-                  color="#fafafa"
-                  size="small"
-                ></van-button>
-                <span>1</span>
-                <van-button
-                  icon="plus"
-                  color="#f4f4f4"
-                  size="small"
-                ></van-button>
-                <div class="shanchu">
-                  <van-button icon="close" color="#f4f4f4"></van-button>
-                </div>
+                <van-stepper
+                  v-model="item.quantity"
+                  @plus="addNum(item, item.product._id)"
+                  @minus="subNum(item, item.product._id)"
+                />
+                <van-icon
+                  name="delete-o"
+                  size="25"
+                  @click="delProduct(item.product._id)"
+                />
               </div>
             </div>
           </div>
@@ -63,7 +46,7 @@
       </ul>
     </div>
     <div class="point">
-      <p>温馨提示：产品是否购买成功，以最终下单为准，请尽快下单</p>
+      <p>温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
     </div>
     <div class="mid">
       <div class="mid-t">
@@ -84,7 +67,7 @@
           </div>
           <div class="goods-info">
             <p>{{ item.name }}</p>
-            <span>￥999</span>
+            <span>￥{{ item.price }}</span>
           </div>
         </div>
       </div>
@@ -97,9 +80,9 @@
     <div class="bottom-submit">
       <div class="box-flex">
         <div class="price-box flex">
-          <span>共0件 金额：</span>
+          <span>共{{ sumQuantity }}件 金额：</span>
           <br />
-          <strong>0</strong>
+          <strong>{{ sumPrice }}</strong>
           <span>元</span>
         </div>
         <div class="btn disable flex" @click="goOn">继续购物</div>
@@ -111,15 +94,58 @@
 
 <script>
 import { reqProducts } from "../api/product";
+import { reqCartlist } from "../api/cart";
+import { reqAddCart } from "../api/cart";
+import { reqDelCart } from "../api/cart";
 export default {
   components: {},
   data() {
     return {
-      checked: false,
       products: [],
+      cartproducts: [],
     };
   },
-  computed: {},
+  computed: {
+    checked: {
+      // set设置选中状态
+      set(flag) {
+        return this.cartproducts.forEach((item) => (item.checked = flag));
+      },
+      get() {
+        // 调用get方法
+        return (
+          this.cartproducts.length ==
+          this.cartproducts.filter((item) => item.checked == true).length
+        );
+      },
+    },
+    //价格
+    sumPrice() {
+      //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
+      return this.cartproducts
+        .filter((item) => {
+          //通过过滤，筛选出被选中的商品
+          return item.checked;
+        })
+        .reduce(function(pre, cur) {
+          //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
+          return pre + cur.product.price * cur.quantity;
+        }, 0);
+    },
+    //数量
+    sumQuantity() {
+      //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
+      return this.cartproducts
+        .filter((item) => {
+          //通过过滤，筛选出被选中的商品
+          return item.checked;
+        })
+        .reduce(function(pre, cur) {
+          //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
+          return pre + cur.quantity;
+        }, 0);
+    },
+  },
   watch: {},
 
   methods: {
@@ -133,6 +159,7 @@ export default {
     goOn() {
       this.$router.push("/category");
     },
+    //获取商品列表
     async loadProduct() {
       const res = await reqProducts();
       console.log(res);
@@ -149,9 +176,33 @@ export default {
         },
       });
     },
+    //获取购物车列表
+    async initCartList() {
+      const result = await reqCartlist();
+      console.log(result);
+      this.cartproducts = result.data;
+    },
+    //  增加
+    async addNum(item, id) {
+      item.quantity++;
+      const result = await reqAddCart({ product: id });
+      console.log(result);
+    },
+    // 减少
+    async subNum(item, id) {
+      item.quantity--;
+      const result = await reqAddCart({ product: id, quantity: -1 });
+      console.log(result);
+    },
+    //删除
+    async delProduct(id) {
+      const result = await reqDelCart(id);
+      console.log(result);
+    },
   },
   created() {
     this.loadProduct();
+    this.initCartList();
   },
   mounted() {},
   beforeCreate() {},
@@ -185,16 +236,19 @@ export default {
   padding: 10px 0;
 }
 .checked {
-  /* margin-top: 60px; */
   float: left;
   margin: 60px 5px 0 5px;
 }
 .imgp {
+  display: block;
   width: 100px;
   height: 100px;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   float: left;
   margin-top: 20px;
+}
+.imgp img {
+  width: 100%;
 }
 .info {
   text-align: left;
@@ -207,18 +261,24 @@ export default {
 }
 .info h3 {
   color: #666666;
+  font-size: 16px;
 }
 .info p {
   margin-top: 5px;
   color: #999999;
+  font-size: 15px;
 }
 .shanjian {
   margin-top: 5px;
   font-size: 20px;
+  float: left;
 }
-.shanchu {
+.van-stepper {
+  float: left;
+}
+.van-icon-delete-o {
   float: right;
-  /* margin-top: 10px; */
+  margin-left: 135px;
 }
 .plist-t {
   float: left;
@@ -281,13 +341,13 @@ export default {
 .point {
   width: 100%;
   height: 35px;
-  font-size: 12px;
+  font-size: 13px;
   overflow: hidden;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   background: #fff;
 }
 .point p {
-  margin-top: 12px;
+  margin-top: 5px;
   margin-left: 20px;
   color: #999999;
 }
@@ -304,7 +364,7 @@ export default {
   display: flex;
 }
 .bottom-submit .price-box {
-  font-size: 13px;
+  font-size: 15px;
   color: #999;
   width: 100%;
   text-align: center;
@@ -314,7 +374,8 @@ export default {
   flex: 1;
 }
 .bottom-submit .price-box strong {
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 800;
   color: #ff5722;
   margin-right: 10px;
 }
@@ -327,7 +388,7 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .jiesuan {
   display: block;
@@ -338,6 +399,6 @@ export default {
   text-align: center;
   height: 50px;
   line-height: 50px;
-  font-size: 14px;
+  font-size: 16px;
 }
 </style>
