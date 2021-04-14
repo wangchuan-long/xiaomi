@@ -9,7 +9,7 @@
     <div class="left">
       <div class="list">
         <ul>
-          <li v-for="item in productsArr" :key="item._id">
+          <li v-for="item in productsArr" :key="item._id" @click="listCategory(item.product_category)">
             <p>{{ item }}</p>
           </li>
         </ul>
@@ -52,12 +52,14 @@ export default {
     async loadProduct() {
       const res = await reqProducts({ per: 107 });
       this.products = res.data.products;
-
+      
       this.products.forEach((v) => {
         if (this.productsArr.some((it) => it == v.category.name) == false) {
           this.productsArr.unshift(v.category.name);
         }
+        
       });
+      console.log(this.productsArr);
     },
     loadDetail(id) {
       this.$router.push({
@@ -66,6 +68,12 @@ export default {
           id,
         },
       });
+    },
+     listCategory(product_category){
+      // const classify = await reqProducts({
+      //   product_category
+      // })
+      console.log(product_category);
     },
   },
   created() {

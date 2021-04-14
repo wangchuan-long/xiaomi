@@ -104,7 +104,24 @@ const router = new VueRouter({
         showTab: true,
       },
     },
-
+    {
+      path: "/password",
+      name: "Password",
+      component: () => import("../views/password"),
+      meta: {
+        title: "修改密码",
+        showTab: false,
+      },
+    },
+    {
+      path: "/set",
+      name: "Set",
+      component: () => import("../views/set"),
+      meta: {
+        title: "个人设置",
+        showTab: false,
+      },
+    },
     {
       path: "/search",
       name: "Search",
@@ -121,6 +138,15 @@ const router = new VueRouter({
       meta: {
         title: "订单",
         showTab: false,
+      },
+    },
+    {
+      path: "/allorder",
+      name: "allOrder",
+      component: () => import("../views/allOrder"),
+      meta: {
+        title: "全部订单",
+        showTab: true,
       },
     },
     {
