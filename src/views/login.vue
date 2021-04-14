@@ -52,12 +52,13 @@ export default {
       console.log('submit', values);
       const result = await reqLogin(values)
       console.log(result);
-      if(result.status === 200){
+      if(result.data.code == 'success'){
         Toast.success('登录成功');
         setToken(result.data.token);
         this.$router.push('/')
         console.log(this.userName);
-        localStorage.setItem('userName',this.userName);
+      }else{
+        Toast.fail('请检查用户名或者密码');
       }
     },
   },

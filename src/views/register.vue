@@ -91,8 +91,8 @@ html{
   font-size: 12px;
 }
 .reg{
-  margin-top: 5rem;
-  text-align:center;vertical-align:middel
+    margin-top: 5rem;
+    text-align:center;vertical-align:middel
 }
 .van-field__control{
   width: 10rem;
