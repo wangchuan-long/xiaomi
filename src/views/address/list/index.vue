@@ -1,5 +1,10 @@
 <template>
   <div class="list">
+    <van-nav-bar fixed title="收货地址" class="van-ellipsis">
+      <template #left>
+        <van-icon name="arrow-left" size="30" @click="back" />
+      </template>
+    </van-nav-bar>
     <van-address-list
       v-model="chosenAddressId"
       :list="list"
@@ -48,6 +53,10 @@ export default {
   watch: {},
 
   methods: {
+    // 返回
+    back() {
+      this.$router.go(-1);
+    },
     onAdd() {
       Toast("新增地址");
     },

@@ -157,7 +157,7 @@ const router = new VueRouter({
         title: "地址",
         showTab: false,
       },
-      redirect: "/address/edit",
+      redirect: "/address/list",
       children: [
         {
           path: "list",

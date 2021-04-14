@@ -71,11 +71,6 @@
         </div>
       </div>
     </div>
-    <!-- <van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit">
-      <van-checkbox v-model="checked" checked-color="#ff6700"
-        >全选</van-checkbox
-      >
-    </van-submit-bar> -->
     <div class="bottom-submit">
       <div class="box-flex">
         <div class="price-box flex">
@@ -96,6 +91,8 @@ import { reqProducts } from "../api/product";
 import { reqCartlist } from "../api/cart";
 import { reqAddCart } from "../api/cart";
 import { reqDelCart } from "../api/cart";
+import { isLogined } from "../utils/utils";
+import { Toast } from "vant";
 export default {
   components: {},
   data() {
@@ -156,18 +153,23 @@ export default {
     search() {
       this.$router.push("/search");
     },
-    onSubmit() {},
+    // 继续购物
     goOn() {
       this.$router.push("/category");
     },
-    //获取商品列表
+    // 结算
+    goOrder() {
+      if (isLogined()) {
+        this.$router.push("/order");
+      } else {
+        this.$router.push("/login");
+      }
+    },
+    // 获取商品列表
     async loadProduct() {
       const res = await reqProducts();
       console.log(res);
       this.products = res.data.products;
-    },
-    goOrder() {
-      this.$router.push("/order");
     },
     loadDetail(id) {
       this.$router.push({
@@ -203,7 +205,12 @@ export default {
   },
   created() {
     this.loadProduct();
-    this.initCartList();
+    if (isLogined()) {
+      console.log(isLogined());
+      this.initCartList();
+    } else {
+      Toast("您还没有登录");
+    }
   },
   mounted() {},
   beforeCreate() {},
