@@ -28,7 +28,7 @@ instance.interceptors.response.use(
   function(error) {
     if (error && error.message.indexOf("401") > -1) {
       Notify({ type: "danger", message: "你还没有登录" });
-      location.href = "/";
+      // location.href = "/";
     }
     return Promise.reject(error);
   }

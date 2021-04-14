@@ -17,11 +17,12 @@
 
 <script>
 import { Toast } from "vant";
+import { areaList } from "@vant/area-data";
 export default {
   components: {},
   data() {
     return {
-      areaList: {},
+      areaList: areaList,
       searchResult: [],
     };
   },
