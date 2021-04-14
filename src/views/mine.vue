@@ -1,17 +1,22 @@
 <template>
   <div class="mine">
     <div class="header">
-      <div class="img">
-        <img src="../img/touxiang.png" alt="" />
+      <router-link :to="{name:'Password'}">
+        <div class="img" v-if="img" >
+          <img :src="img" alt="">
+        </div>
+      </router-link>
+      <div class="img" v-if="!img">
+        <img src="../img/touxiang.png" alt="">
       </div>
       <div class="register">
         <router-link :to="{name:'Login'}" tag="div">
-          <span v-if="!userName"> 登录/注册</span>
-          <span v-if="userName">{{userName}}</span>
+          <span v-if="!nickName"> 登录/注册</span>
         </router-link>
+        <span v-if="nickName">{{nickName}}</span>
       </div>
     </div>
-    <van-cell title="我的订单" is-link to="index" value="全部订单" />
+    <van-cell title="我的订单" is-link to="allOrder" value="全部订单" />
 
     <div class="collist">
       <van-row>
@@ -38,39 +43,64 @@
     <div class="zw"></div>
     <van-cell title="服务之家" is-link to="index" value="" />
     <van-cell title="小米之家" is-link to="index" value="" />
+    <div class="zw"></div>    
+    <van-cell title="设置" is-link to="set" value="" />
   </div>
 </template>
 
 <script>
+import {reqInfo} from '../api/user'
+import {isLogined} from '../utils/utils'
 export default {
   components: {},
   data() {
     return {
-      userName:'',
+      nickName:'',
+      img:'',
     };
   },
   computed: {},
   watch: {},
 
-  methods: {},
+  methods: {
+    async loadInfo(){
+      const result =await reqInfo()
+      console.log(result);
+      this.nickName = result.data.nickName;
+      this.img = result.data.avatar
+    }
+  },
   created() {
-    this.userName = localStorage.getItem('userName')
+    this.userName = localStorage.getItem('userName'),
+    this.img = localStorage.getItem('avatar')
+    if(isLogined()){
+      this.loadInfo()
+    }
+    console.log(isLogined());
   },
   
 };
 </script>
 <style scoped>
+html,body{
+  height: 100%;
+  width: 100%;
+}
 .header {
   width: 100%;
   height: 5.5rem;
-  background-color: orange;
+  background:center 0 #f37d0f;
   position: relative;
+  background:url(../img/background.png) center 0 #f37d0f;
+  background-size: auto 100%;
 }
-img {
+
+.img img {
   width: 4rem;
   height: 4rem;
   margin-top: 0.8rem;
   margin-left: 0.8rem;
+  border-radius: 3rem;
 }
 .register {
   position: absolute;

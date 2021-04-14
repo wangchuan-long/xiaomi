@@ -104,7 +104,24 @@ const router = new VueRouter({
         showTab: true,
       },
     },
-
+    {
+      path: "/password",
+      name: "Password",
+      component: () => import("../views/password"),
+      meta: {
+        title: "修改密码",
+        showTab: false,
+      },
+    },
+    {
+      path: "/set",
+      name: "Set",
+      component: () => import("../views/set"),
+      meta: {
+        title: "个人设置",
+        showTab: false,
+      },
+    },
     {
       path: "/search",
       name: "Search",
@@ -121,6 +138,15 @@ const router = new VueRouter({
       meta: {
         title: "订单",
         showTab: false,
+      },
+    },
+    {
+      path: "/allorder",
+      name: "allOrder",
+      component: () => import("../views/allOrder"),
+      meta: {
+        title: "全部订单",
+        showTab: true,
       },
     },
     {
@@ -151,19 +177,19 @@ const router = new VueRouter({
 });
 
 //解决编程式路由往同一地址跳转时会报错的情况
-// const originalPush = VueRouter.prototype.push;
-// const originalReplace = VueRouter.prototype.replace;
-// //push
-// VueRouter.prototype.push = function push(location, onResolve, onReject) {
-//   if (onResolve || onReject)
-//     return originalPush.call(this, location, onResolve, onReject);
-//   return originalPush.call(this, location).catch((err) => err);
-// };
-// //replace
-// VueRouter.prototype.replace = function push(location, onResolve, onReject) {
-//   if (onResolve || onReject)
-//     return originalReplace.call(this, location, onResolve, onReject);
-//   return originalReplace.call(this, location).catch((err) => err);
-// };
+const originalPush = VueRouter.prototype.push;
+const originalReplace = VueRouter.prototype.replace;
+//push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject)
+    return originalPush.call(this, location, onResolve, onReject);
+  return originalPush.call(this, location).catch((err) => err);
+};
+//replace
+VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+  if (onResolve || onReject)
+    return originalReplace.call(this, location, onResolve, onReject);
+  return originalReplace.call(this, location).catch((err) => err);
+};
 
 export default router;

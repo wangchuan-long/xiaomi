@@ -15,6 +15,20 @@
         </li>
       </ul>
 
+<<<<<<< HEAD
+=======
+    <div class="left">
+      <div class="list">
+        <ul>
+          <li v-for="item in productsArr" :key="item._id" @click="listCategory(item.product_category)">
+            <p>{{ item }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="maskBox" @touchmove.prevent>
+>>>>>>> 134c348fdd07678a84b6294a14ff7be64890c09f
       <div class="right">
         <div class="shop">
           <div
@@ -59,12 +73,18 @@ export default {
     async loadProduct() {
       const res = await reqProducts({ per: 107 });
       this.products = res.data.products;
+<<<<<<< HEAD
       // 筛选一级标题
+=======
+      
+>>>>>>> 134c348fdd07678a84b6294a14ff7be64890c09f
       this.products.forEach((v) => {
         if (this.productsArr.some((it) => it == v.category.name) == false) {
           this.productsArr.unshift(v.category.name);
         }
+        
       });
+      console.log(this.productsArr);
     },
     // 跳转详情
     loadDetail(id) {
@@ -72,6 +92,12 @@ export default {
         name: "Detail",
         query: { id },
       });
+    },
+     listCategory(product_category){
+      // const classify = await reqProducts({
+      //   product_category
+      // })
+      console.log(product_category);
     },
   },
   created() {
