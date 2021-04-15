@@ -4,9 +4,6 @@
       <template #left >
         <van-icon name="arrow-left" size="30" @click="onClickLeft" />
       </template>
-      <template #right>
-        <van-icon name="search" size="30" @click="search" />
-      </template>
     </van-nav-bar>
     <div class="reg">
       <van-uploader :after-read="afterRead" v-if="!avatar" />
@@ -105,15 +102,38 @@ html {
 }
 
 button {
-  width: 15rem;
+  width: 80%;
   height: 3rem;
   background-color: rgba(11, 132, 255, 0.3);
   border-radius: 5rem;
   margin-left: 5.5rem;
+  margin-top: 20px;
+    margin-left: 10%;
 }
 .foo p {
   margin-top: 7rem;
   color:#666666;
 }
 a{color: #1989fa;}
+.van-cell[data-v-77453986]{
+      position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 16px;
+    overflow: hidden;
+    color: #323233;
+    font-size: 18px;
+    line-height: 24px;
+    background-color: #f0f0f0;
+    width: 80%;
+    height: 50px;
+    margin-left: 10%;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+
 </style>
