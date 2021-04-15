@@ -92,7 +92,7 @@ const router = new VueRouter({
       component: () => import("../views/cart"),
       meta: {
         title: "购物车",
-        showTab: false,
+        showTab: true,
       },
     },
     {

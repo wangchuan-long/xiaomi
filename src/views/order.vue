@@ -45,60 +45,17 @@
       </van-collapse>
       <div class="ui-line"></div>
       <div class="fangshi">
-        <ul>
+        <ul v-for="item in goods" :key="item._id">
           <li>
             <div class="goods-img">
-              <img src="" alt="" />
+              <img :src="item.product.image" alt="" />
             </div>
             <div class="goods-l">
-              <p>小米巨能写</p>
+              <p>{{ item.product.name }}</p>
             </div>
             <div class="goods-r">
-              <span>999</span>
-            </div>
-          </li>
-          <li>
-            <div class="goods-img">
-              <img src="" alt="" />
-            </div>
-            <div class="goods-l">
-              <p>小米巨能写</p>
-            </div>
-            <div class="goods-r">
-              <span>999</span>
-            </div>
-          </li>
-          <li>
-            <div class="goods-img">
-              <img src="" alt="" />
-            </div>
-            <div class="goods-l">
-              <p>小米巨能写</p>
-            </div>
-            <div class="goods-r">
-              <span>999</span>
-            </div>
-          </li>
-          <li>
-            <div class="goods-img">
-              <img src="" alt="" />
-            </div>
-            <div class="goods-l">
-              <p>小米巨能写</p>
-            </div>
-            <div class="goods-r">
-              <span>999</span>
-            </div>
-          </li>
-          <li>
-            <div class="goods-img">
-              <img src="" alt="" />
-            </div>
-            <div class="goods-l">
-              <p>小米巨能写</p>
-            </div>
-            <div class="goods-r">
-              <span>999</span>
+              <strong v-if="item.quantity > 2">{{ item.quantity }}x</strong>
+              <span>{{ item.product.price }}</span>
             </div>
           </li>
         </ul>
@@ -147,8 +104,16 @@ export default {
     goAddress() {
       this.$router.push("/address");
     },
+    getGoods() {
+      var list = localStorage.getItem("CartGoods");
+      console.log(JSON.parse(list));
+      this.goods = JSON.parse(list);
+      console.log(this.goods);
+    },
   },
-  created() {},
+  created() {
+    this.getGoods();
+  },
   mounted() {},
   beforeCreate() {},
   beforeMount() {},
