@@ -40,7 +40,6 @@ export default {
       if (isLogined()) {
         const result = await reqCartlist();
         this.$store.commit("setCarts", result.data.length);
-        console.log(1);
       }
     },
   },

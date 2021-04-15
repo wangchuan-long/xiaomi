@@ -2,7 +2,7 @@
   <div class="register">
     <van-nav-bar fixed title="注册" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="onClickLeft" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
     </van-nav-bar>
     <div class="top-info">
@@ -64,21 +64,19 @@ export default {
   },
   computed: {},
   methods: {
-    // 上传头像 此时可以自行将文件上传至服务器
+    // 上传头像
     afterRead(file) {
-      console.log(file);
       this.avatar = file.content;
     },
     // 注册
     async onSubmit(values) {
       const result = await reqReg({ ...values, avatar: this.avatar });
-      console.log(result);
       if (result.status === 200) {
         this.$router.replace("/login");
       }
     },
     // 返回登录页面
-    onClickLeft() {
+    back() {
       this.$router.replace("/login");
     },
   },

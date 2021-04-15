@@ -15,7 +15,6 @@
       </template>
     </van-swipe>
 
-    <!-- ----------------------------- -->
     <div class="xx">
       <div class="price">
         <p>￥</p>
@@ -26,7 +25,6 @@
         <span>{{ obj.price * 10 }}</span>
       </div>
     </div>
-    <!-- --------------------------------- -->
 
     <div class="more">
       <div class="yuji"><p>预计得11米全</p></div>
@@ -34,7 +32,6 @@
       <span>更多 ></span>
     </div>
 
-    <!-- ---------------------------------- -->
     <div class="xinxi">
       <h3>{{ obj.name }}</h3>
       <p><b>①</b> &nbsp;&nbsp;&nbsp;智能设备控制</p>
@@ -42,7 +39,6 @@
       <p>③&nbsp;&nbsp;&nbsp;蓝牙mesh网关</p>
     </div>
 
-    <!-- ---------------------------------- -->
     <van-goods-action>
       <van-goods-action-icon
         to="/"
@@ -135,7 +131,7 @@ export default {
     },
     // 客服
     onClickIcon() {
-      Toast("客服在睡觉");
+      Toast("客服在睡觉zZ");
     },
     // 加入购物车
     async onClickButton() {

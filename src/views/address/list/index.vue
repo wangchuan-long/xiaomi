@@ -2,7 +2,7 @@
   <div class="list">
     <van-nav-bar fixed title="收货地址" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="back" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
     </van-nav-bar>
     <van-address-list
@@ -37,7 +37,7 @@ export default {
   },
   computed: {},
   watch: {
-    "$route.path": function(newVal, oldVal) {
+    "$route.path": function (newVal, oldVal) {
       console.log(newVal, oldVal);
     },
     $route(newVal, oldVal) {
@@ -49,12 +49,12 @@ export default {
     // 返回
     back() {
       let routeObj = this.$store.getters.getRoute;
-      // 如果从我的进来 返回到我的 否则统一返回到结算页面
+      // 如果从mine进来 返回到mine 否则统一返回到结算页面
       console.log(routeObj);
-      if (routeObj.oldVal === "/mine") {
-        this.$router.push("/mine");
-      } else {
+      if (routeObj.oldVal === "/order") {
         this.$router.push("/order");
+      } else {
+        this.$router.push("/mine");
       }
     },
     // 添加地址
@@ -105,7 +105,7 @@ export default {
   padding-top: 54px;
 }
 .van-address-list__bottom {
-  bottom: 20px;
+  bottom: 60px;
 }
 .van-nav-bar .van-icon {
   color: #9e9e9e;

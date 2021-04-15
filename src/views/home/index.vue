@@ -57,7 +57,23 @@ export default {
       this.$router.push("/search");
     },
   },
-  created() {},
+  created() {
+    let Val = this.$store.getters.getRoute;
+    console.log(Val);
+    if (Val.newVal == "/home/recommend") {
+      this.active = 0;
+    } else if (Val.newVal == "/home/phone") {
+      this.active = 1;
+    } else if (Val.newVal == "/home/intellily") {
+      this.active = 2;
+    } else if (Val.newVal == "/home/tv") {
+      this.active = 3;
+    } else if (Val.newVal == "/home/family") {
+      this.active = 4;
+    } else {
+      this.active = 5;
+    }
+  },
   mounted() {},
   beforeCreate() {},
   beforeMount() {},

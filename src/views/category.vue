@@ -2,10 +2,10 @@
   <div class="category">
     <van-nav-bar fixed title="分类" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="back" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
       <template #right>
-        <van-icon name="search" size="30" @click="search" />
+        <van-icon name="search" size="27" color="#666" @click="search" />
       </template>
     </van-nav-bar>
     <div class="list">
@@ -49,7 +49,7 @@ export default {
   methods: {
     // 返回
     back() {
-      this.$router.push("/");
+      this.$router.go(-1);
     },
     // 搜索
     search() {
@@ -128,6 +128,6 @@ export default {
 }
 img {
   width: 120px;
-  height:120px;
+  height: 120px;
 }
 </style>

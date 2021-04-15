@@ -2,10 +2,10 @@
   <div class="cart">
     <van-nav-bar fixed title="购物车" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="back" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
       <template #right>
-        <van-icon name="search" size="30" @click="search" />
+        <van-icon name="search" size="27" color="#666" @click="search" />
       </template>
     </van-nav-bar>
     <div class="noitems" v-if="carts">
@@ -134,7 +134,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function(pre, cur) {
+        .reduce(function (pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.product.price * cur.quantity;
         }, 0);
@@ -147,7 +147,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function(pre, cur) {
+        .reduce(function (pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.quantity;
         }, 0);
@@ -155,7 +155,7 @@ export default {
   },
   watch: {
     // 监听vuex中carts的数据变化
-    "$store.state.carts": function() {
+    "$store.state.carts": function () {
       this.carts = this.$store.getters.getCarts == 0 ? true : false;
     },
   },
@@ -165,7 +165,6 @@ export default {
     back() {
       this.$router.push("/");
     },
-
     // 搜索
     search() {
       this.$router.push("/search");

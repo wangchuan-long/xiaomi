@@ -46,10 +46,9 @@ export default {
     onCancel() {
       this.$router.go(-1);
     },
-    // 搜索商品
+    // 通过名称搜索商品
     async onSearch() {
       const result = await reqProducts({ name: this.value });
-      console.log(result);
       if (result.status === 200) {
         this.list = result.data.products;
       }
