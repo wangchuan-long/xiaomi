@@ -1,16 +1,17 @@
 <template>
-  <div class="modification">
-    <div class="header">
-      <van-nav-bar
-        title="修改密码"
-        left-text="返回"
-        left-arrow
-        @click-left="onClickLeft"
-      />
-      <van-notice-bar mode="closeable"
-        >您正在修改密码，请谨慎输入</van-notice-bar
-      >
-    </div>
+	<div class="modification">
+		<div class="header">
+        <van-nav-bar fixed title="修改密码" class="van-ellipsis">
+          <template #left >
+            <van-icon name="arrow-left" size="30" @click="onClickLeft" />
+          </template>
+          <!-- <template #right>
+            <van-icon name="search" size="30" @click="search" />
+          </template> -->
+        </van-nav-bar>
+			<van-notice-bar mode="closeable">您正在修改密码，请谨慎输入</van-notice-bar>
+			
+		</div>
 
     <div class="xiugai">
       <van-form @submit="onSubmit">
@@ -68,4 +69,25 @@ export default {
 </script>
 
 <style>
+.van-nav-bar__content {
+  background: #f2f2f2;
+}
+.van-nav-bar__content .van-nav-bar__title {
+  color: #666666;
+  font-size: 1.1rem;
+}
+.van-nav-bar .van-icon{
+  font-size: 30px;
+  color: #9e9e9e;
+}
+.van-button{
+  position: absolute;
+  left: 82px;
+}
+.van-button--round{
+  background-color: rgba(11, 132, 255, 0.3)
+}
+.van-button--block {
+  width: 60%;
+}
 </style>

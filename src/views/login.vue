@@ -30,8 +30,8 @@
     </div>
 
     <div class="foo">
-      <router-link :to="{ name: 'Register' }">
-        <a href="">还有账号？立即注册</a>
+      <router-link :to="{name:'Register'}">
+        <a href="">还没有账号？立即注册</a>
       </router-link>
     </div>
   </div>
@@ -76,34 +76,33 @@ export default {
 };
 </script>
 <style scoped>
-img {
-  width: 3.2rem;
-  height: 3.2rem;
-}
-.header {
-  width: 100%;
-  height: 5rem;
-  text-align: center;
-  margin-top: 5rem;
-}
-.header p {
-  margin-top: 1rem;
-  font-size: 1rem;
-}
-.from {
-  margin-top: 2rem;
-}
-.foo {
-  text-align: center;
-}
-button {
+  img{
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+  .header{
+    width: 100%;
+    height: 5rem;
+    text-align: center;
+    margin-top: 5rem;
+  }
+  .header p{
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #666666;
+  }
+  .from{
+    margin-top: 2rem;
+  }
+  .foo{
+    text-align: center;
+  }
+  button{
   width: 15rem;
   height: 3rem;
-  background-color: rgba(15, 191, 214, 0.4);
-  border-radius: 5rem;
+  background-color: rgba(11, 132, 255, 0.3);
+  border-radius:5rem;
   margin-left: 5rem;
 }
-a {
-  color: #333;
-}
+a{color:#1989fa;}
 </style>

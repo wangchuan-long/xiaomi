@@ -78,8 +78,8 @@
       <svg class="icon" aria-hidden="true" id="huangguan">
         <use xlink:href="#icon-dianpu"></use>
       </svg>
-      <div class="txt">
-        <span>小米之家</span>
+      <div class="txt" @click="dizhi">
+        <span>地址管理</span>
       </div>
     </div>
     <div class="zw"></div>
@@ -118,6 +118,9 @@ export default {
     set() {
       this.$router.push("set");
     },
+    dizhi(){
+      this.$router.push('/address')
+    }
   },
   created() {
     (this.userName = localStorage.getItem("userName")),

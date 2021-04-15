@@ -128,6 +128,6 @@ export default {
 }
 img {
   width: 120px;
-  height: 120px;
+  height:120px;
 }
 </style>

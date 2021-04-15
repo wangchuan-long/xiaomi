@@ -1,11 +1,13 @@
 <template>
   <div class="register">
-    <van-nav-bar
-      title="注册小米账号"
-      left-text="返回"
-      left-arrow
-      @click-left="onClickLeft"
-    />
+    <van-nav-bar fixed title="注册小米账号" class="van-ellipsis">
+      <template #left >
+        <van-icon name="arrow-left" size="30" @click="onClickLeft" />
+      </template>
+      <template #right>
+        <van-icon name="search" size="30" @click="search" />
+      </template>
+    </van-nav-bar>
     <div class="reg">
       <van-uploader :after-read="afterRead" v-if="!avatar" />
       <img :src="avatar" alt="" width="90rem" height="90rem" v-else />
@@ -38,7 +40,7 @@
         >
       </van-form>
       <div class="foo">
-        <p>已阅读并同意小米帐号 用户协议隐私政策</p>
+        <p>已阅读并同意小米帐号</p><a href="">用户协议隐私政策</a>
       </div>
     </div>
   </div>
@@ -80,6 +82,17 @@ export default {
 };
 </script>
 <style scoped>
+.van-nav-bar__content {
+  background: #f2f2f2;
+}
+.van-nav-bar__content .van-nav-bar__title {
+  color: #666666;
+  font-size: 1.1rem;
+}
+.van-nav-bar .van-icon{
+  font-size: 30px;
+  color: #9e9e9e;
+}
 html {
   width: 100%;
   height: 100%;
@@ -90,22 +103,17 @@ html {
   text-align: center;
   vertical-align: middel;
 }
-.van-field__control {
-  width: 10rem;
-  height: 4rem;
-  border-radius: 1rem;
-  margin-top: 1.5rem;
-  margin: 1rem auto;
-  background-color: gray;
-}
+
 button {
   width: 15rem;
   height: 3rem;
-  background-color: rgba(15, 191, 214, 0.4);
+  background-color: rgba(11, 132, 255, 0.3);
   border-radius: 5rem;
   margin-left: 5.5rem;
 }
 .foo p {
   margin-top: 7rem;
+  color:#666666;
 }
+a{color: #1989fa;}
 </style>
