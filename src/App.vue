@@ -32,6 +32,7 @@ export default {
     },
   },
 
+  create() {},
   methods: {
     // 底部位置存入vuex中
     setActive(num) {

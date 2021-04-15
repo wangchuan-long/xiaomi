@@ -8,7 +8,7 @@
         <van-icon name="search" size="30" @click="search" />
       </template>
     </van-nav-bar>
-    <div class="noitems" v-if="isHasCart()">
+    <div class="noitems" v-if="carts">
       <a>
         <van-icon name="shopping-cart-o" size="40" color="#ababab" />
         <span>购物车还是空的</span>
@@ -51,7 +51,7 @@
         </li>
       </ul>
     </div>
-    <div class="point" v-if="!isHasCart()">
+    <div class="point" v-if="!carts">
       <p>温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
     </div>
     <div class="mid">
@@ -83,7 +83,7 @@
         >全选</van-checkbox
       >
     </van-submit-bar> -->
-    <div class="bottom-submit" v-if="!isHasCart()">
+    <div class="bottom-submit" v-if="!carts">
       <div class="box-flex">
         <div class="price-box flex">
           <span>共{{ sumQuantity }}件 金额：</span>
@@ -109,6 +109,7 @@ export default {
     return {
       products: [],
       cartproducts: [],
+      carts: false,
     };
   },
   computed: {
@@ -133,7 +134,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function(pre, cur) {
+        .reduce(function (pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.product.price * cur.quantity;
         }, 0);
@@ -146,28 +147,23 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function(pre, cur) {
+        .reduce(function (pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.quantity;
         }, 0);
     },
   },
-  watch: {},
+  watch: {
+    // 监听vuex中carts的数据变化
+    "$store.state.carts": function () {
+      this.carts = this.$store.getters.getCarts == 0 ? true : false;
+    },
+  },
 
   methods: {
     // 返回
     back() {
-      this.$router.go(-1);
-    },
-    // 是否有商品
-    isHasCart() {
-      if (this.cartproducts.length == 0) {
-        this.$route.meta.showTab = true;
-        return true;
-      } else {
-        this.$route.meta.showTab = false;
-        return false;
-      }
+      this.$router.push("/category");
     },
     // 搜索
     search() {
@@ -179,9 +175,10 @@ export default {
     },
     // 获取商品列表
     async loadProduct() {
-      const res = await reqProducts();
-      console.log(res);
-      this.products = res.data.products;
+      const result = await reqProducts();
+      if (result.status === 200) {
+        this.products = result.data.products;
+      }
     },
     // 结算
     goOrder() {
@@ -212,10 +209,11 @@ export default {
     // 获取购物车列表
     async initCartList() {
       const result = await reqCartlist();
-      console.log(result);
-
-      this.cartproducts = result.data;
-      this.isHasCart();
+      // console.log(result);
+      if (result.status === 200) {
+        this.cartproducts = result.data;
+        this.$store.commit("setCarts", result.data.length);
+      }
     },
     // 增加数量
     async addNum(item, id) {
@@ -248,19 +246,19 @@ export default {
       if (result.data.code === "success") {
         this.initCartList();
       }
-      console.log(result);
     },
     //
   },
 
   created() {
+    this.loadProduct();
     if (isLogined()) {
-      console.log(isLogined());
       this.initCartList();
     } else {
       Toast("您还没有登录");
     }
-    this.loadProduct();
+    // 初始化时获取购物车数量是否为0 并赋值到carts中
+    this.carts = this.$store.getters.getCarts == 0 ? true : false;
   },
   mounted() {},
   beforeCreate() {},
