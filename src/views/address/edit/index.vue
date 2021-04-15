@@ -38,7 +38,7 @@ export default {
   methods: {
     // 返回
     back() {
-      this.$router.go(-1);
+      this.$router.replace("/address/list");
     },
     // 保存地址
     async onSave(content) {
@@ -50,11 +50,11 @@ export default {
         isDefault: content.isDefault,
       };
       console.log(obj);
-      const result = await reqChangeRess(this.id, { params: obj });
+      const result = await reqChangeRess({ id: this.id, params: obj });
       if (result.data.code === "success") {
         Toast.success("修改成功");
         console.log(result);
-        // this.$router.replace("/address/list");
+        this.$router.replace("/address/list");
       }
     },
     // 删除地址

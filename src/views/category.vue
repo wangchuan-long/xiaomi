@@ -65,7 +65,6 @@ export default {
           this.productsArr.unshift(v.category.name);
         }
       });
-      console.log(this.productsArr);
     },
     // 跳转详情
     loadDetail(id) {
@@ -73,12 +72,6 @@ export default {
         name: "Detail",
         query: { id },
       });
-    },
-    listCategory(product_category) {
-      // const classify = await reqProducts({
-      //   product_category
-      // })
-      console.log(product_category);
     },
   },
   created() {

@@ -35,7 +35,7 @@ export default {
   methods: {
     // 返回
     back() {
-      this.$router.go(-1);
+      this.$router.replace("/address/list");
     },
     // 添加地址
     async onSave(content) {

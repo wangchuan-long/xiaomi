@@ -1,7 +1,7 @@
 <template>
   <div id="detail" v-if="obj">
     <div class="detail-header">
-      <van-icon name="arrow-left" @click="onBack" />
+      <van-icon name="arrow-left" @click="back" />
       <van-icon name="upgrade" @click="showShare = true" />
     </div>
 
@@ -23,7 +23,7 @@
       </div>
       <div class="oldprice">
         <p>￥</p>
-        <span>169</span>
+        <span>{{ obj.price * 10 }}</span>
       </div>
     </div>
     <!-- --------------------------------- -->
@@ -50,13 +50,16 @@
         icon="wap-home-o"
         text="首页"
       />
-      <van-goods-action-icon icon="service-o" text="客服" />
+      <van-goods-action-icon
+        icon="service-o"
+        text="客服"
+        @click="onClickIcon"
+      />
       <van-goods-action-icon
         to="Cart"
         icon="shop-o"
         text="购物车"
-        badge="5"
-        @click="onClickIcon"
+        :badge="carts"
       />
 
       <van-goods-action-button
@@ -77,12 +80,13 @@
 
 <script>
 import Vue from "vue";
-import { Lazyload } from "vant";
+import { Lazyload, Dialog } from "vant";
 import { Icon } from "vant";
 import { GoodsAction, GoodsActionIcon, GoodsActionButton } from "vant";
 import { Toast } from "vant";
 import { reqProductDetail } from "../../api/product";
 import { reqAddCart } from "../../api/cart";
+import { isLogined } from "../../utils/utils";
 
 Vue.use(Icon);
 Vue.use(Lazyload);
@@ -97,6 +101,7 @@ export default {
       current: 0,
       obj: null,
       showShare: false,
+      carts: 0,
       options: [
         { name: "微信", icon: "wechat" },
         { name: "微博", icon: "weibo" },
@@ -107,11 +112,16 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    // 监听vuex中active的数据变化
+    "$store.state.carts": function () {
+      this.carts = this.$store.getters.getCarts;
+    },
+  },
 
   methods: {
     // 返回
-    onBack() {
+    back() {
       this.$router.go(-1);
     },
     // 分享
@@ -119,19 +129,34 @@ export default {
       Toast(option.name);
       this.showShare = false;
     },
-
+    // 轮播图
     onChange(index) {
       this.current = index;
     },
+    // 客服
     onClickIcon() {
-      console.log(Toast);
+      Toast("客服在睡觉");
     },
-
     // 加入购物车
     async onClickButton() {
-      const result = await reqAddCart({ product: this.id });
-      console.log(result);
-      Toast("加入购物车成功");
+      if (isLogined()) {
+        const result = await reqAddCart({ product: this.id });
+        console.log(result);
+        if (result.status === 200) {
+          Toast.success("加入购物车成功");
+        }
+      } else {
+        Dialog.confirm({
+          title: "请先登录",
+          message: "是否前往登录",
+        })
+          .then(() => {
+            this.$router.push("/login");
+          })
+          .catch(() => {
+            // on cancel
+          });
+      }
     },
     // 初始化
     async initDate(id) {
@@ -143,6 +168,7 @@ export default {
     },
   },
   created() {
+    this.carts = this.$store.getters.getCarts;
     this.id = this.$route.query.id;
     this.initDate(this.id);
   },
@@ -229,7 +255,7 @@ span {
 
 .oldprice {
   float: left;
-  width: 3rem;
+  width: 6rem;
   height: 1rem;
 
   margin-top: 1rem;

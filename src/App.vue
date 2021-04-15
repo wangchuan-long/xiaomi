@@ -17,7 +17,9 @@ export default {
   },
   watch: {
     // 监听路由
-    "$route.path": function (newVal) {
+    "$route.path": function (newVal, oldVal) {
+      // 将路由存入vuex
+      this.$store.commit("setRoute", { newVal, oldVal });
       if (newVal === "/home") {
         this.setActive(0);
       } else if (newVal === "/category") {
@@ -30,8 +32,9 @@ export default {
     },
   },
 
+  create() {},
   methods: {
-    // 存入vuex中
+    // 底部位置存入vuex中
     setActive(num) {
       this.$store.commit("setActive", num);
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="header">
-      <img src="../img/logo.png" alt="">
+      <img src="../img/logo.png" alt="" />
       <p>让每个人都能享受科技的乐趣</p>
     </div>
     <div class="from">
@@ -21,8 +21,10 @@
           placeholder="密码"
           :rules="[{ required: true, message: '请填写密码' }]"
         />
-        <div style="margin: 16px;">
-          <van-button round block type="info" native-type="submit">登录</van-button>
+        <div style="margin: 16px">
+          <van-button round block type="info" native-type="submit"
+            >登录</van-button
+          >
         </div>
       </van-form>
     </div>
@@ -36,34 +38,41 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
-import {reqLogin} from '../api/user'
-import {setToken} from "../utils/utils"
+import { Toast } from "vant";
+import { reqLogin } from "../api/user";
+import { setToken } from "../utils/utils";
+import { reqCartlist } from "../api/cart";
 export default {
   components: {},
   data() {
     return {
-      userName: '',
-      password: '',
+      userName: "",
+      password: "",
     };
   },
-   methods: {
+  methods: {
+    // 登录
     async onSubmit(values) {
-      console.log('submit', values);
-      const result = await reqLogin(values)
+      console.log("submit", values);
+      const result = await reqLogin(values);
       console.log(result);
-      if(result.data.code == 'success'){
-        Toast.success('登录成功');
+      if (result.data.code == "success") {
+        Toast.success("登录成功");
         setToken(result.data.token);
-        this.$router.push('/')
+        this.$router.push("/");
         console.log(this.userName);
-      }else{
-        Toast.fail('请检查用户名或者密码');
+        this.getCarts();
+      } else {
+        Toast.fail("请检查用户名或者密码");
       }
+    },
+    // 获取一下商品数量
+    async getCarts() {
+      const result = await reqCartlist();
+      this.$store.commit("setCarts", result.data.length);
     },
   },
   created() {},
-  
 };
 </script>
 <style scoped>

@@ -2,40 +2,75 @@
   <div class="order">
     <van-nav-bar fixed title="用户结算" left-text="" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="fanhui" />
+        <van-icon name="arrow-left" size="30" @click="back" />
       </template>
     </van-nav-bar>
     <div class="order-m">
       <div class="page-wrap" @click="goAddress">
         <div class="shouhuo">
-          <p>添加收货地址</p>
+          <p v-if="!address">添加收货地址</p>
+          <div v-if="address">
+            <p>{{ address.receiver }}</p>
+            <p>{{ address.mobile }}</p>
+            <p>{{ address.regions }}{{ address.address }}</p>
+          </div>
           <van-icon name="arrow" size="20" />
         </div>
       </div>
       <div class="ui-line"></div>
-      <div class="fangshi">
+      <!-- <div class="fangshi">
         <ul>
           <li>
-            <a href="" class="alipay">支付宝</a>
-            <van-checkbox v-model="checked"></van-checkbox>
+            <a href="" @click.prevent class="alipay">支付宝</a>
+            <van-checkbox v-model="result[0]" name="zf"></van-checkbox>
           </li>
           <li>
-            <a href="" class="micash">小米钱包</a>
-            <van-checkbox v-model="checked"></van-checkbox>
+            <a href="" @click.prevent class="micash">小米钱包</a>
+            <van-checkbox v-model="result[1]" name="zf"></van-checkbox>
           </li>
           <li>
-            <a href="" class="vxpay">微信</a>
-            <van-checkbox v-model="checked"></van-checkbox>
+            <a href="" @click.prevent class="vxpay">微信</a>
+            <van-checkbox v-model="result[2]" name="zf"></van-checkbox>
           </li>
           <li class="xialaPay">
             <p>使用其他支付方式</p>
           </li>
         </ul>
-      </div>
+      </div> -->
+      <van-radio-group v-model="radio">
+        <div class="paylist">
+          <van-cell-group>
+            <div class="alipay2">
+              <van-cell title="支付宝" clickable @click="radio = '1'">
+                <template #right-icon>
+                  <van-radio name="1" />
+                </template>
+              </van-cell>
+            </div>
+            <div class="micash2">
+              <van-cell title="小米钱包" clickable @click="radio = '2'">
+                <template #right-icon>
+                  <van-radio name="2" />
+                </template>
+              </van-cell>
+            </div>
+            <div class="weixin2">
+              <van-cell title="微信" clickable @click="radio = '3'">
+                <template #right-icon>
+                  <van-radio name="3" />
+                </template>
+              </van-cell>
+            </div>
+            <van-cell>
+              <p>使用其他支付方式</p>
+            </van-cell>
+          </van-cell-group>
+        </div>
+      </van-radio-group>
       <div class="ui-line"></div>
       <div class="yunfei">
         <p>运费</p>
-        <span>快递配送（运费10元）</span>
+        <span>{{ sumPrice > 69 ? "包邮" : "快递配送（运费10元）" }}</span>
       </div>
       <van-collapse v-model="activeNames">
         <van-collapse-item title="电子普通发票" name="1"
@@ -64,19 +99,19 @@
       <div class="info">
         <p class="p1">
           <strong>商品价格:</strong>
-          <span> 888</span>
+          <span> {{ sumPrice }}</span>
         </p>
         <p>
           <strong>配送费用:</strong>
-          <span> 10</span>
+          <span>{{ sumPrice > 69 ? "0.00" : "10.00" }}</span>
         </p>
       </div>
       <div class="ui-line"></div>
     </div>
     <div class="order-foot">
       <div class="order-foot-l">
-        <span>共2件 合计：</span>
-        <strong>666</strong>
+        <span>共{{ sumQuantity }}件 合计：</span>
+        <strong>{{ sumPrice }}</strong>
       </div>
       <div class="order-foot-r">
         <p>去付款</p>
@@ -86,33 +121,66 @@
 </template>
 
 <script>
+import { reqResslist } from "../api/address";
 export default {
   components: {},
   data() {
     return {
-      checked: false,
+      result: [false, false, false],
       activeNames: [""],
+      radio: "1",
+      address: null,
     };
   },
-  computed: {},
+  computed: {
+    sumPrice() {
+      //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
+      return this.goods.reduce(function(pre, cur) {
+        //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
+        return pre + cur.product.price * cur.quantity;
+      }, 0);
+    },
+    //数量
+    sumQuantity() {
+      //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
+      return this.goods.reduce(function(pre, cur) {
+        //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
+        return pre + cur.quantity;
+      }, 0);
+    },
+  },
   watch: {},
 
   methods: {
-    fanhui() {
-      history.back(); //返回历史页面
+    // 返回购物车
+    back() {
+      this.$router.push("/cart");
     },
+    // 去收货地址列表
     goAddress() {
       this.$router.push("/address");
     },
-    getGoods() {
+    // 初始化
+    init() {
       var list = localStorage.getItem("CartGoods");
-      console.log(JSON.parse(list));
       this.goods = JSON.parse(list);
-      console.log(this.goods);
+    },
+    // 获取默认的地址
+    async initAddress() {
+      const result = await reqResslist();
+      console.log(result);
+      result.data.addresses.forEach((v) => {
+        if (v.isDefault) {
+          this.address = v;
+          console.log(v);
+          return;
+        }
+      });
     },
   },
   created() {
-    this.getGoods();
+    this.init();
+    this.initAddress();
   },
   mounted() {},
   beforeCreate() {},
@@ -286,18 +354,18 @@ export default {
   right: 0;
 }
 .order-foot-l {
-  width: 53%;
+  width: 50%;
   float: left;
-  font-size: 17px;
+  font-size: 18px;
   color: #ff4d14;
   line-height: 57px;
   text-align: center;
 }
 .order-foot-l strong {
-  font-weight: 750;
+  font-weight: 800;
 }
 .order-foot-r {
-  width: 47%;
+  width: 50%;
   float: left;
   background: #ff5722;
 }
@@ -306,5 +374,43 @@ export default {
   color: #fff;
   font-size: 18px;
   text-align: center;
+}
+.paylist span {
+  display: block;
+  color: #333;
+  font-weight: normal;
+  text-indent: 40px;
+  font-size: 15px;
+}
+.paylist .van-cell {
+  padding: 10px 0;
+  background: none;
+}
+.paylist p {
+  text-align: center;
+  font-size: 13px;
+  font-weight: normal;
+  color: #999;
+}
+.van-cell-group .van-cell--clickable:nth-of-type(0) {
+  background: chocolate;
+}
+.paylist .alipay2 {
+  background: url(//s1.mi.com/m/images/m/pay_zfb2.png) 0 50% no-repeat;
+  background-size: 25px 25px;
+  margin: 0 20px;
+  border-bottom: 1px solid #ebedf0;
+}
+.paylist .micash2 {
+  background: url(//s1.mi.com/m/images/m/micash_wap.png) 0 50% no-repeat;
+  background-size: 25px 25px;
+  margin: 0 20px;
+  border-bottom: 1px solid #ebedf0;
+}
+.paylist .weixin2 {
+  background: url(//s1.mi.com/m/images/m/pay_wx.png) 0 50% no-repeat;
+  background-size: 25px 25px;
+  margin: 0 20px;
+  border-bottom: 1px solid #ebedf0;
 }
 </style>

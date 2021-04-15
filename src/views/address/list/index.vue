@@ -36,12 +36,25 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    "$route.path": function (newVal, oldVal) {
+      console.log(newVal, oldVal);
+    },
+    $route(newVal, oldVal) {
+      console.log(newVal, oldVal);
+    },
+  },
 
   methods: {
     // 返回
     back() {
-      this.$router.go(-1);
+      let routeObj = this.$store.getters.getRoute;
+      // 如果从我的进来 返回到我的 否则统一返回到结算页面
+      if (routeObj.oldVal === "mine") {
+        this.$router.push("/mine");
+      } else {
+        this.$router.push("/order");
+      }
     },
     // 添加地址
     onAdd() {

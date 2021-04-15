@@ -8,12 +8,11 @@
         <van-icon name="search" size="30" @click="search" />
       </template>
     </van-nav-bar>
-
-    <div class="noitems" v-if="isHasCart()">
-      <a href="/">
+    <div class="noitems" v-if="carts">
+      <a>
         <van-icon name="shopping-cart-o" size="40" color="#ababab" />
         <span>购物车还是空的</span>
-        <em>去逛逛</em>
+        <em @click="goOn">去逛逛</em>
       </a>
     </div>
     <div class="cart-list">
@@ -52,7 +51,7 @@
         </li>
       </ul>
     </div>
-    <div class="point" v-if="!isHasCart()">
+    <div class="point" v-if="!carts">
       <p>温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
     </div>
     <div class="mid">
@@ -84,7 +83,7 @@
         >全选</van-checkbox
       >
     </van-submit-bar> -->
-    <div class="bottom-submit" v-if="!isHasCart()">
+    <div class="bottom-submit" v-if="!carts">
       <div class="box-flex">
         <div class="price-box flex">
           <span>共{{ sumQuantity }}件 金额：</span>
@@ -110,6 +109,7 @@ export default {
     return {
       products: [],
       cartproducts: [],
+      carts: false,
     };
   },
   computed: {
@@ -153,21 +153,17 @@ export default {
         }, 0);
     },
   },
-  watch: {},
+  watch: {
+    // 监听vuex中carts的数据变化
+    "$store.state.carts": function () {
+      this.carts = this.$store.getters.getCarts == 0 ? true : false;
+    },
+  },
 
   methods: {
-    isHasCart() {
-      if (this.cartproducts.length == 0) {
-        this.$route.meta.showTab = true;
-        return true;
-      } else {
-        this.$route.meta.showTab = false;
-        return false;
-      }
-    },
     // 返回
     back() {
-      this.$router.go(-1);
+      this.$router.push("/category");
     },
     // 搜索
     search() {
@@ -177,23 +173,17 @@ export default {
     goOn() {
       this.$router.push("/category");
     },
-    // 结算
-    // goOrder() {
-    //   if (isLogined()) {
-    //     this.$router.push("/order");
-    //   } else {
-    //     this.$router.push("/login");
-    //   }
-    // },
     // 获取商品列表
     async loadProduct() {
-      const res = await reqProducts();
-      console.log(res);
-      this.products = res.data.products;
+      const result = await reqProducts();
+      if (result.status === 200) {
+        this.products = result.data.products;
+      }
     },
+    // 结算
     goOrder() {
       if (this.sumQuantity <= 0) {
-        Toast("先选中需要结算的商品");
+        Toast.fail("先选中需要结算的商品");
       } else {
         var isList = [];
         for (var i in this.cartproducts) {
@@ -203,9 +193,11 @@ export default {
         }
         console.log(isList);
         localStorage.setItem("CartGoods", JSON.stringify(isList));
+        this.$router.push("/order");
       }
-      this.$router.push("/order");
+      // this.$router.push("/order");
     },
+    // 跳转到详情页
     loadDetail(id) {
       this.$router.push({
         name: "Detail",
@@ -217,24 +209,25 @@ export default {
     // 获取购物车列表
     async initCartList() {
       const result = await reqCartlist();
-      console.log(result);
-
-      this.cartproducts = result.data;
-      this.isHasCart();
+      // console.log(result);
+      if (result.status === 200) {
+        this.cartproducts = result.data;
+        this.$store.commit("setCarts", result.data.length);
+      }
     },
-    // 增加
+    // 增加数量
     async addNum(item, id) {
       item.quantity++;
       const result = await reqAddCart({ product: id });
       console.log(result);
     },
-    // 减少
+    // 减少数量
     async subNum(item, id) {
       item.quantity--;
       const result = await reqAddCart({ product: id, quantity: -1 });
       console.log(result);
     },
-    //删除弹框
+    // 点击删除后确认弹框
     async delProduct(id) {
       Dialog.confirm({
         title: "是否确认从购物车中删除此商品",
@@ -247,26 +240,25 @@ export default {
           // on cancel
         });
     },
-    //删除方法
+    // 删除方法
     async delGoods(id) {
       const result = await reqDelCart(id);
       if (result.data.code === "success") {
         this.initCartList();
       }
-      console.log(result);
     },
     //
   },
 
   created() {
+    this.loadProduct();
     if (isLogined()) {
-      console.log(isLogined());
       this.initCartList();
     } else {
       Toast("您还没有登录");
     }
-
-    this.loadProduct();
+    // 初始化时获取购物车数量是否为0 并赋值到carts中
+    this.carts = this.$store.getters.getCarts == 0 ? true : false;
   },
   mounted() {},
   beforeCreate() {},
