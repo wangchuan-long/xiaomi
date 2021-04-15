@@ -65,6 +65,7 @@ export default {
           this.productsArr.unshift(v.category.name);
         }
       });
+      this.productsArr.unshift("全部");
     },
     // 跳转详情
     loadDetail(id) {
@@ -127,6 +128,6 @@ export default {
 }
 img {
   width: 120px;
-  height: 120px;
+  height:120px;
 }
 </style>

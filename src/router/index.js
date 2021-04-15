@@ -36,53 +36,52 @@ const router = new VueRouter({
         showTab: true,
       },
       children: [
-        {
-          path: "tuijian",
-          name: "Tuijian",
-          component: () => import("../views/home/tuijian"), meta: {
-            title: "注册",
-            showTab: true,
-          },
-        }, //重定向
+        // {
+        //   path: "tuijian",
+        //   name: "Tuijian",
+        //   component: () => import("../views/home/tuijian"),
+        //   meta: {
+        //     title: "推荐",
+        //   },
+        // },
         {
           path: "phone",
           name: "Phone",
-          component: () => import("../views/home/phone"), meta: {
-            title: "注册",
-            showTab: true,
+          component: () => import("../views/home/phone"),
+          meta: {
+            title: "手机",
           },
-          // redirect:'/home/phone',
         },
         {
           path: "zhineng",
           name: "Zhineng",
-          component: () => import("../views/home/zhineng"), meta: {
-            title: "注册",
-            showTab: true,
+          component: () => import("../views/home/zhineng"),
+          meta: {
+            title: "智能",
           },
         },
         {
           path: "teleTv",
           name: "TeleTv",
-          component: () => import("../views/home/teleTv"), meta: {
-            title: "注册",
-            showTab: true,
+          component: () => import("../views/home/teleTv"),
+          meta: {
+            title: "电视",
           },
         },
         {
           path: "family_use",
           name: "Family_use",
-          component: () => import("../views/home/family_use"), meta: {
-            title: "注册",
-            showTab: true,
+          component: () => import("../views/home/family_use"),
+          meta: {
+            title: "家电",
           },
         },
         {
           path: "computer",
           name: "Computer",
-          component: () => import("../views/home/computer"), meta: {
-            title: "注册",
-            showTab: true,
+          component: () => import("../views/home/computer"),
+          meta: {
+            title: "电脑",
           },
         },
       ],
@@ -101,7 +100,7 @@ const router = new VueRouter({
       name: "Detail",
       component: () => import("../views/detail"),
       meta: {
-        title: "列表",
+        title: "详情",
         showTab: false,
       },
     },
@@ -111,7 +110,7 @@ const router = new VueRouter({
       component: () => import("../views/cart"),
       meta: {
         title: "购物车",
-        showTab: true,
+        showTab: false,
       },
     },
     {
@@ -165,7 +164,7 @@ const router = new VueRouter({
       component: () => import("../views/allOrder"),
       meta: {
         title: "全部订单",
-        showTab: true,
+        showTab: false,
       },
     },
     {

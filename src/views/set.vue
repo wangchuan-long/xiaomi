@@ -1,12 +1,14 @@
 <template>
   <div class="set">
     <div class="header">
-      <van-nav-bar
-        title="标题"
-        left-text="返回"
-        left-arrow
-        @click-left="onClickLeft"
-      />
+        <van-nav-bar fixed title="修改昵称" class="van-ellipsis">
+          <template #left >
+            <van-icon name="arrow-left" size="30" @click="onClickLeft" />
+          </template>
+          <!-- <template #right>
+            <van-icon name="search" size="30" @click="search" />
+          </template> -->
+        </van-nav-bar>
     </div>
 
     <van-uploader :after-read="afterRead" v-if="!avatar" />
@@ -94,13 +96,32 @@ body {
   text-align: center;
   vertical-align: middel;
 }
-.van-nav-bar__left {
-  color: #66667d;
-}
-.setfooter {
+  .van-nav-bar__content {
+    background: #f2f2f2;
+  }
+  .van-nav-bar__content .van-nav-bar__title {
+    color: #666666;
+    font-size: 1.1rem;
+  }
+  .van-nav-bar .van-icon{
+    font-size: 30px;
+    color: #9e9e9e;
+  }
+  .van-button{
+    position: absolute;
+    left: 82px;
+  }
+  .van-button--round{
+    background-color: rgba(11, 132, 255, 0.3)
+  }
+  .van-button--block {
+    width: 60%;
+  }
+.setfooter{
+  border-radius: 3rem;
   width: 100%;
   height: 3rem;
-  background-color: coral;
+  background-color: #ff6700 ;
   position: absolute;
   bottom: 0rem;
   text-align: center;
