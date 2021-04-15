@@ -64,19 +64,19 @@
       <div class="info">
         <p class="p1">
           <strong>商品价格:</strong>
-          <span> 888</span>
+          <span> {{ sumPrice }}</span>
         </p>
         <p>
           <strong>配送费用:</strong>
-          <span> 10</span>
+          <span>0</span>
         </p>
       </div>
       <div class="ui-line"></div>
     </div>
     <div class="order-foot">
       <div class="order-foot-l">
-        <span>共2件 合计：</span>
-        <strong>666</strong>
+        <span>共{{ sumQuantity }}件 合计：</span>
+        <strong>{{ sumPrice }}</strong>
       </div>
       <div class="order-foot-r">
         <p>去付款</p>
@@ -94,7 +94,23 @@ export default {
       activeNames: [""],
     };
   },
-  computed: {},
+  computed: {
+    sumPrice() {
+      //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
+      return this.goods.reduce(function(pre, cur) {
+        //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
+        return pre + cur.product.price * cur.quantity;
+      }, 0);
+    },
+    //数量
+    sumQuantity() {
+      //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
+      return this.goods.reduce(function(pre, cur) {
+        //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
+        return pre + cur.quantity;
+      }, 0);
+    },
+  },
   watch: {},
 
   methods: {
@@ -286,18 +302,18 @@ export default {
   right: 0;
 }
 .order-foot-l {
-  width: 53%;
+  width: 50%;
   float: left;
-  font-size: 17px;
+  font-size: 18px;
   color: #ff4d14;
   line-height: 57px;
   text-align: center;
 }
 .order-foot-l strong {
-  font-weight: 750;
+  font-weight: 800;
 }
 .order-foot-r {
-  width: 47%;
+  width: 50%;
   float: left;
   background: #ff5722;
 }

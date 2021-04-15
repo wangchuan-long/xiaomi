@@ -8,7 +8,6 @@
         <van-icon name="search" size="30" @click="search" />
       </template>
     </van-nav-bar>
-    <<<<<<< HEAD
     <div class="noitems" v-if="isHasCart()">
       <a href="/">
         <van-icon name="shopping-cart-o" size="40" color="#ababab" />
@@ -16,7 +15,6 @@
         <em>去逛逛</em>
       </a>
     </div>
-    ======= >>>>>>> c1cf368b86e8adbb6ee4fd51d90c7da8478c83d3
     <div class="cart-list">
       <ul>
         <li class="plist" v-for="item in cartproducts" :key="item._id">
@@ -135,7 +133,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function (pre, cur) {
+        .reduce(function(pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.product.price * cur.quantity;
         }, 0);
@@ -148,7 +146,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function (pre, cur) {
+        .reduce(function(pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.quantity;
         }, 0);
@@ -178,21 +176,21 @@ export default {
     goOn() {
       this.$router.push("/category");
     },
-    // 结算
-    goOrder() {
-      if (isLogined()) {
-        this.$router.push("/order");
-      } else {
-        this.$router.push("/login");
-      }
-    },
+    // // 结算
+    // goOrder() {
+    //   if (isLogined()) {
+    //     this.$router.push("/order");
+    //   } else {
+    //     this.$router.push("/login");
+    //   }
+    // },
     // 获取商品列表
     async loadProduct() {
       const res = await reqProducts();
       console.log(res);
       this.products = res.data.products;
     },
-<<<<<<< HEAD
+    // 结算
     goOrder() {
       if (this.sumQuantity <= 0) {
         Toast("先选中需要结算的商品");
@@ -205,12 +203,11 @@ export default {
         }
         console.log(isList);
         localStorage.setItem("CartGoods", JSON.stringify(isList));
+        this.$router.push("/order");
       }
-      this.$router.push("/order");
+      // this.$router.push("/order");
     },
-=======
     // 跳转到详情页
->>>>>>> c1cf368b86e8adbb6ee4fd51d90c7da8478c83d3
     loadDetail(id) {
       this.$router.push({
         name: "Detail",
@@ -239,11 +236,7 @@ export default {
       const result = await reqAddCart({ product: id, quantity: -1 });
       console.log(result);
     },
-<<<<<<< HEAD
     //删除弹框
-=======
-    // 删除
->>>>>>> c1cf368b86e8adbb6ee4fd51d90c7da8478c83d3
     async delProduct(id) {
       Dialog.confirm({
         title: "是否确认从购物车中删除此商品",
@@ -276,15 +269,12 @@ export default {
     }
 
     this.loadProduct();
-<<<<<<< HEAD
-=======
     if (isLogined()) {
       console.log(isLogined());
       this.initCartList();
     } else {
       Toast("您还没有登录");
     }
->>>>>>> c1cf368b86e8adbb6ee4fd51d90c7da8478c83d3
   },
   mounted() {},
   beforeCreate() {},
