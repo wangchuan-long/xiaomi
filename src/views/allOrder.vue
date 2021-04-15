@@ -16,16 +16,17 @@
 
 
       <van-card
-        num="1"
-        price="1999"
+        v-for="item in orderList"
+        :key="item._id"
+        :price="item.price"
         desc=""
         title="小米手机"
         thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
       >
         <template #tags>
-          <van-tag plain type="danger">收货人：赵奕恒</van-tag>
+          <van-tag plain type="danger">收货人：{{item.receiver}}</van-tag>
           <br>
-          <van-tag plain type="danger">收货地址：河南省郑州市高新区</van-tag>
+          <van-tag plain type="danger">收货地址：{{item.regions}}</van-tag>
         </template>
       </van-card>
   </div>
@@ -37,7 +38,7 @@ import {reqOrderlist} from '../api/order'
 export default {
   data(){
     return{
-      site:'',
+      orderList:[],
     }
   },
   methods: {
@@ -45,9 +46,11 @@ export default {
     back() {
       this.$router.push("/mine");
     },
-    initOrder(){
-      const result = reqOrderlist();
+    async initOrder(){
+      const result =await reqOrderlist();
       console.log(result);
+      this.orderList = result.data.orders;
+      console.log(this.orderList);
     }
   },
   created(){
