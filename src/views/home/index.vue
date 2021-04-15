@@ -59,7 +59,6 @@ export default {
   },
   created() {
     let Val = this.$store.getters.getRoute;
-    console.log(Val);
     if (Val.newVal == "/home/recommend") {
       this.active = 0;
     } else if (Val.newVal == "/home/phone") {

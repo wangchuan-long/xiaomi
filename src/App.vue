@@ -18,7 +18,6 @@ export default {
   watch: {
     // 监听路由
     "$route.path": function (newVal, oldVal) {
-      console.log(newVal, oldVal);
       // 将路由存入vuex
       this.$store.commit("setRoute", { newVal, oldVal });
       if (newVal === "/home") {
