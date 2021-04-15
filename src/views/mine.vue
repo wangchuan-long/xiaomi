@@ -12,7 +12,7 @@
         <span v-if="nickName">{{ nickName }}</span>
       </div>
     </div>
-    <van-cell title="我的订单" is-link to="allOrder" value="全部订单" />
+    <van-cell title="我的订单" @click="goOrder" value="全部订单" />
 
     <div class="collist">
       <van-row>
@@ -35,7 +35,7 @@
     </div>
     <div class="zw"></div>
 
-    <div class="cell" >
+    <div class="cell">
       <svg class="icon" aria-hidden="true" id="huangguan">
         <use xlink:href="#icon-huangguan"></use>
       </svg>
@@ -85,10 +85,9 @@
 </template>
 <script>
 import "../assets/iconfont/iconfont";
-import {Toast} from 'vant'
+import { Toast, Dialog } from "vant";
 import { reqInfo } from "../api/user";
 import { isLogined } from "../utils/utils";
-// import { Form } from 'vant';
 export default {
   components: {},
   data() {
@@ -103,11 +102,22 @@ export default {
   methods: {
     // 修改密码
     goPass() {
-      this.$router.push("/password");
+      if (isLogined()) {
+        this.$router.push("/password");
+      } else {
+        this.isLogin();
+      }
     },
     // 登录
     goLog() {
       this.$router.push("/login");
+    },
+    goOrder() {
+      if (isLogined()) {
+        this.$router.push("/allOrder");
+      } else {
+        this.isLogin();
+      }
     },
     // 初始化
     async loadInfo() {
@@ -117,19 +127,40 @@ export default {
     },
     // 跳转到设置
     set() {
-      this.$router.push("/set");
+      if (isLogined()) {
+        this.$router.push("/set");
+      } else {
+        this.isLogin();
+      }
     },
     // 跳转到地址
-    dizhi(){
-      this.$router.push('/address')
+    dizhi() {
+      if (isLogined()) {
+        this.$router.push("/address");
+      } else {
+        this.isLogin();
+      }
     },
-    huiyuan(){
+    huiyuan() {
       Toast({
-        message: '功能暂未开发',
-        icon: '#icon-shezhi',
-        duration:1000,
+        message: "功能暂未开发",
+        icon: "#icon-shezhi",
+        duration: 1000,
       });
-    }
+    },
+    // 是否登录
+    isLogin() {
+      Dialog.confirm({
+        title: "请先登录",
+        message: "是否前往登录",
+      })
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
   },
   created() {
     (this.userName = localStorage.getItem("userName")),
