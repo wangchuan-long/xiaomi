@@ -1,17 +1,15 @@
 <template>
-	<div class="modification">
-		<div class="header">
-        <van-nav-bar fixed title="修改密码" class="van-ellipsis">
-          <template #left >
-            <van-icon name="arrow-left" size="30" @click="onClickLeft" />
-          </template>
-          <!-- <template #right>
-            <van-icon name="search" size="30" @click="search" />
-          </template> -->
-        </van-nav-bar>
-			<van-notice-bar mode="closeable">您正在修改密码，请谨慎输入</van-notice-bar>
-			
-		</div>
+  <div class="modification">
+    <div class="header">
+      <van-nav-bar fixed title="修改密码" class="van-ellipsis">
+        <template #left>
+          <van-icon name="arrow-left" size="27" color="#666" @click="back" />
+        </template>
+      </van-nav-bar>
+      <van-notice-bar mode="closeable"
+        >您正在修改密码，请谨慎输入</van-notice-bar
+      >
+    </div>
 
     <div class="xiugai">
       <van-form @submit="onSubmit">
@@ -61,7 +59,7 @@ export default {
       }
     },
     // 返回
-    onClickLeft() {
+    back() {
       this.$router.go(-1);
     },
   },
@@ -76,16 +74,16 @@ export default {
   color: #666666;
   font-size: 1.1rem;
 }
-.van-nav-bar .van-icon{
+.van-nav-bar .van-icon {
   font-size: 30px;
   color: #9e9e9e;
 }
-.van-button{
+.van-button {
   position: absolute;
   left: 82px;
 }
-.van-button--round{
-  background-color: rgba(11, 132, 255, 0.3)
+.van-button--round {
+  background-color: rgba(11, 132, 255, 0.3);
 }
 .van-button--block {
   width: 60%;

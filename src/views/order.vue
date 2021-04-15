@@ -2,41 +2,22 @@
   <div class="order">
     <van-nav-bar fixed title="用户结算" left-text="" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="back" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
     </van-nav-bar>
     <div class="order-m">
       <div class="page-wrap" @click="goAddress">
         <div class="shouhuo">
           <p v-if="!address">添加收货地址</p>
-          <div v-if="address">
+          <div v-if="address" class="personadd">
             <p>{{ address.receiver }}</p>
-            <p>{{ address.mobile }}</p>
-            <p>{{ address.regions }}{{ address.address }}</p>
+            <p class="pp">{{ address.mobile }}</p>
+            <span>{{ address.regions }}{{ address.address }}</span>
           </div>
           <van-icon name="arrow" size="20" />
         </div>
       </div>
       <div class="ui-line"></div>
-      <!-- <div class="fangshi">
-        <ul>
-          <li>
-            <a href="" @click.prevent class="alipay">支付宝</a>
-            <van-checkbox v-model="result[0]" name="zf"></van-checkbox>
-          </li>
-          <li>
-            <a href="" @click.prevent class="micash">小米钱包</a>
-            <van-checkbox v-model="result[1]" name="zf"></van-checkbox>
-          </li>
-          <li>
-            <a href="" @click.prevent class="vxpay">微信</a>
-            <van-checkbox v-model="result[2]" name="zf"></van-checkbox>
-          </li>
-          <li class="xialaPay">
-            <p>使用其他支付方式</p>
-          </li>
-        </ul>
-      </div> -->
       <van-radio-group v-model="radio">
         <div class="paylist">
           <van-cell-group>
@@ -113,16 +94,28 @@
         <span>共{{ sumQuantity }}件 合计：</span>
         <strong>{{ sumPrice }}</strong>
       </div>
-      <div class="order-foot-r" @click="goMoney">
-        <p>去付款</p>
+      <div class="order-foot-r">
+        <p @click="Pay">去付款</p>
       </div>
       
     </div>
+
+    <van-dialog
+      v-model="show"
+      title="请扫描二维码完成支付"
+      confirmButtonText="支付完成"
+      :before-close="beforeClose"
+      show-cancel-button
+    >
+      <img id="ewm" src="../img/ewm.png" />
+    </van-dialog>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 import { reqResslist } from "../api/address";
+import { reqAddOrder } from "../api/order";
 export default {
   components: {},
   data() {
@@ -131,12 +124,13 @@ export default {
       activeNames: [""],
       radio: "1",
       address: null,
+      show: false,
     };
   },
   computed: {
     sumPrice() {
       //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
-      return this.goods.reduce(function(pre, cur) {
+      return this.goods.reduce(function (pre, cur) {
         //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
         return pre + cur.product.price * cur.quantity;
       }, 0);
@@ -144,7 +138,7 @@ export default {
     //数量
     sumQuantity() {
       //filter可以生成一个新数组，新数组里面存放的是过滤后符号条件的元素
-      return this.goods.reduce(function(pre, cur) {
+      return this.goods.reduce(function (pre, cur) {
         //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
         return pre + cur.quantity;
       }, 0);
@@ -161,11 +155,44 @@ export default {
     goAddress() {
       this.$router.push("/address");
     },
-    // 初始化
-    init() {
-      var list = localStorage.getItem("CartGoods");
-      this.goods = JSON.parse(list);
+    // 支付
+    Pay() {
+      this.show = true;
     },
+    beforeClose(action, done) {
+      if (action === "confirm") {
+        this.addOrder(done);
+        this.$router.replace("/allOrder");
+      } else {
+        Toast.fail("支付取消");
+        this.show = false;
+        return done(false);
+      }
+    },
+    // 提交订单
+    async addOrder(done) {
+      let orderDetails = this.goods.map((v) => {
+        return {
+          product: v.product._id,
+          quantity: v.quantity,
+          price: v.product.price,
+        };
+      });
+      let obj = {
+        receiver: this.address.receiver,
+        regions: this.address.regions,
+        address: this.address.address,
+        orderDetails,
+      };
+      const result = await reqAddOrder(obj);
+      if (result.data.code === "success") {
+        Toast.success("支付完成");
+        console.log(result);
+        this.show = false;
+        return done(false);
+      }
+    },
+
     // 获取默认的地址
     async initAddress() {
       const result = await reqResslist();
@@ -173,32 +200,14 @@ export default {
       result.data.addresses.forEach((v) => {
         if (v.isDefault) {
           this.address = v;
-          console.log(v);
           return;
         }
       });
     },
-    goMoney(){
-       console.log(this.address);
-       this.$router.push({
-         name:'allOrder',
-         query:{
-           address:this.address
-         }
-       })
-    //  const result = await reqResslist();
-    //   console.log(result);
-    //   result.data.addresses.forEach((v) => {
-    //     if (v.isDefault) {
-    //       this.address = v;
-    //       console.log(v);
-    //       return {
-    //         v
-    //       }
-    //     }
-    //     console.log(v);
-    //   });
-      
+    // 初始化
+    init() {
+      var list = localStorage.getItem("CartGoods");
+      this.goods = JSON.parse(list);
     },
   },
   created() {
@@ -213,6 +222,12 @@ export default {
 };
 </script>
 <style scoped>
+#ewm {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin: 20px auto;
+}
 .van-nav-bar {
   background-color: #f2f2f2;
   /* position: fixed; */
@@ -234,7 +249,7 @@ export default {
   padding-bottom: 57px;
 }
 .page-wrap {
-  height: 100%;
+  /* height: 100%; */
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -242,14 +257,32 @@ export default {
   background: #fff url(//s1.mi.com/m/images/m/bd1.png) 0 0 repeat-x;
   background-size: 30px 4px;
   position: relative;
-  height: 57px;
+  height: 88px;
+  overflow: hidden;
 }
+.personadd {
+  margin-top: 20px;
+}
+
 .shouhuo p {
-  font-size: 17px;
-  font-weight: 700;
+  font-family: Helvetica Neue, Tahoma, Arial, PingFangSC-Regular,
+    Hiragino Sans GB, Microsoft Yahei, sans-serif;
   margin-left: 20px;
-  line-height: 57px;
+  font-size: 17px;
+  color: #3c3c3c;
+  font-weight: 700;
+  /* line-height: 57px; */
   float: left;
+  padding-bottom: 15px;
+}
+.shouhuo .pp {
+  margin-left: 7px;
+}
+.shouhuo span {
+  font-size: 14px;
+  color: #757575;
+  float: left;
+  margin-left: 20px;
 }
 .ui-line {
   height: 10px;
@@ -262,6 +295,8 @@ export default {
   float: right;
   padding-top: 17px;
   padding-right: 10px;
+  position: absolute;
+  left: 372px;
 }
 .fangshi ul {
   overflow: hidden;

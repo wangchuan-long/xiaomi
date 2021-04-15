@@ -2,7 +2,7 @@
   <div class="edit">
     <van-nav-bar fixed title="修改地址" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="back" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
     </van-nav-bar>
     <van-address-edit
@@ -49,7 +49,6 @@ export default {
         address: content.addressDetail,
         isDefault: content.isDefault,
       };
-      console.log(obj);
       const result = await reqChangeRess({ id: this.id, params: obj });
       if (result.data.code === "success") {
         Toast.success("修改成功");

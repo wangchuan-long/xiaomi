@@ -2,10 +2,10 @@
   <div class="cart">
     <van-nav-bar fixed title="购物车" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="back" />
+        <van-icon name="arrow-left" size="27" color="#666" @click="back" />
       </template>
       <template #right>
-        <van-icon name="search" size="30" @click="search" />
+        <van-icon name="search" size="27" color="#666" @click="search" />
       </template>
     </van-nav-bar>
     <div class="noitems" v-if="carts">
@@ -163,7 +163,7 @@ export default {
   methods: {
     // 返回
     back() {
-      this.$router.push("/category");
+      this.$router.push("/");
     },
     // 搜索
     search() {
@@ -275,7 +275,7 @@ export default {
   height: 68px;
   width: 100%;
   background: #ebebeb;
-  padding-top: 46px;
+  /* padding-top: 46px; */
   overflow: hidden;
 }
 .noitems a {

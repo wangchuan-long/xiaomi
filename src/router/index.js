@@ -7,7 +7,7 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      redirect: "/home",
+      redirect: "/home/recommend",
     },
     {
       path: "/register",
@@ -31,49 +31,55 @@ const router = new VueRouter({
       path: "/home",
       name: "Home",
       component: () => import("../views/home"),
+      redirect: "/home/recommend",
       meta: {
         title: "首页",
         showTab: true,
       },
       children: [
-        // {
-        //   path: "tuijian",
-        //   name: "Tuijian",
-        //   component: () => import("../views/home/tuijian"),
-        //   meta: {
-        //     title: "推荐",
-        //   },
-        // },
+        {
+          path: "recommend",
+          name: "Recommend",
+          component: () => import("../views/home/recommend"),
+          meta: {
+            title: "推荐",
+            showTab: true,
+          },
+        },
         {
           path: "phone",
           name: "Phone",
           component: () => import("../views/home/phone"),
           meta: {
             title: "手机",
+            showTab: true,
           },
         },
         {
-          path: "zhineng",
-          name: "Zhineng",
-          component: () => import("../views/home/zhineng"),
+          path: "intellect",
+          name: "Intellect",
+          component: () => import("../views/home/intellect"),
           meta: {
             title: "智能",
+            showTab: true,
           },
         },
         {
-          path: "teleTv",
-          name: "TeleTv",
-          component: () => import("../views/home/teleTv"),
+          path: "tv",
+          name: "Tv",
+          component: () => import("../views/home/tv"),
           meta: {
             title: "电视",
+            showTab: true,
           },
         },
         {
-          path: "family_use",
-          name: "Family_use",
-          component: () => import("../views/home/family_use"),
+          path: "family",
+          name: "Family",
+          component: () => import("../views/home/family"),
           meta: {
             title: "家电",
+            showTab: true,
           },
         },
         {
@@ -81,7 +87,8 @@ const router = new VueRouter({
           name: "Computer",
           component: () => import("../views/home/computer"),
           meta: {
-            title: "电脑",
+            title: "笔记本",
+            showTab: true,
           },
         },
       ],

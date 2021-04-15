@@ -1,18 +1,14 @@
 <template>
   <div class="mine">
     <div class="header">
-      <router-link :to="{ name: 'Password' }">
-        <div class="img" v-if="img">
-          <img :src="img" alt="" />
-        </div>
-      </router-link>
+      <div class="img" v-if="img" @click="goPass">
+        <img :src="img" alt="" />
+      </div>
       <div class="img" v-if="!img">
         <img src="../img/touxiang.png" alt="" />
       </div>
-      <div class="register">
-        <router-link :to="{ name: 'Login' }" tag="div">
-          <span v-if="!nickName"> 登录/注册</span>
-        </router-link>
+      <div class="register" @click="goLog">
+        <span v-if="!nickName"> 登录/注册</span>
         <span v-if="nickName">{{ nickName }}</span>
       </div>
     </div>
@@ -57,13 +53,6 @@
       </div>
     </div>
     <div class="zw"></div>
-    <!-- <van-cell  title="会员中心" is-link to="index" value="" />
-    <van-cell title="我的优惠" is-link to="index" value="" />
-    <div class="zw"></div>
-    <van-cell title="服务之家" is-link to="index" value="" />
-    <van-cell title="小米之家" is-link to="index" value="" />
-    <div class="zw"></div>    
-    <van-cell title="设置" is-link to="set" value="" /> -->
 
     <div class="cell">
       <svg class="icon" aria-hidden="true" id="huangguan">
@@ -112,14 +101,25 @@ export default {
   watch: {},
 
   methods: {
+    // 修改密码
+    goPass() {
+      this.$router.push("/password");
+    },
+    // 登录
+    goLog() {
+      this.$router.push("/login");
+    },
+    // 初始化
     async loadInfo() {
       const result = await reqInfo();
       this.nickName = result.data.nickName;
       this.img = result.data.avatar;
     },
+    // 跳转到设置
     set() {
-      this.$router.push("set");
+      this.$router.push("/set");
     },
+    // 跳转到地址
     dizhi(){
       this.$router.push('/address')
     },

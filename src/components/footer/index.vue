@@ -6,7 +6,7 @@
       <van-tabbar-item to="/cart" icon="shopping-cart-o" :badge="carts"
         >购物车</van-tabbar-item
       >
-      <van-tabbar-item to="/mine" icon="setting-o">我的</van-tabbar-item>
+      <van-tabbar-item to="/mine" icon="contact">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -40,7 +40,6 @@ export default {
       if (isLogined()) {
         const result = await reqCartlist();
         this.$store.commit("setCarts", result.data.length);
-        console.log(1);
       }
     },
   },
@@ -49,6 +48,7 @@ export default {
     // 创建时获取acitve中数据
     this.active = this.$store.getters.getActive;
     this.carts = this.$store.getters.getCarts;
+    window.document.title = "小米商城-" + this.$route.meta.title;
   },
   mounted() {},
   beforeCreate() {},
@@ -60,9 +60,9 @@ export default {
 <style scoped>
 .footer {
   position: relative;
-  bottom: -1px;
 }
 .van-tabbar--fixed {
   box-shadow: #e8e9e9 0 0 10px;
+  margin-bottom: -1px;
 }
 </style>

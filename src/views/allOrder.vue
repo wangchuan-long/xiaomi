@@ -1,15 +1,12 @@
 <template>
   <div class="allOrder">
-      <div class="top">
-          <van-nav-bar fixed title="全部订单" class="van-ellipsis">
-            <template #left >
-              <van-icon name="arrow-left" size="30" @click="onClickLeft" />
-            </template> 
-            <!-- <template #right>
-              <van-icon name="search" size="30" @click="search" />
-            </template> -->
-          </van-nav-bar>
-      </div>
+    <div class="top">
+      <van-nav-bar fixed title="全部订单" class="van-ellipsis">
+        <template #left>
+          <van-icon name="arrow-left" size="27" color="#666" @click="back" />
+        </template>
+      </van-nav-bar>
+    </div>
 
       <!-- 文字较长时，通过禁用 scrollable 属性关闭滚动播放 -->
       <van-notice-bar
@@ -44,8 +41,9 @@ export default {
     }
   },
   methods: {
-    onClickLeft() {
-      this.$router.go(-1)
+    // 返回
+    back() {
+      this.$router.push("/mine");
     },
     initOrder(){
       const result = reqOrderlist();
@@ -55,7 +53,7 @@ export default {
   created(){
     this.initOrder()
   },
-}
+};
 </script>
 
 <style>
@@ -74,10 +72,10 @@ export default {
     font-size: 30px;
     color: #9e9e9e;
 }
-.van-row{
+.van-row {
   text-align: center;
 }
-.top{
+.top {
   position: relative;
 }
 </style>
