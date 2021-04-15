@@ -107,7 +107,7 @@ export default {
 }
 .left li:first-child {
   color: #fb7d34;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .right {
@@ -131,23 +131,6 @@ export default {
   width: 8rem;
   height: 9rem;
   padding-bottom: 3rem;
-}
-.van-nav-bar {
-  background-color: #f2f2f2;
-}
-::v-deep .van-icon {
-  font-size: 30px;
-  color: #9e9e9e;
-}
-.cart-list {
-  background: #f5f5f5;
-}
-::v-deep .van-ellipsis {
-  color: #66667d;
-  font-size: 18px;
-}
-.van-icon {
-  font-size: 25px;
 }
 img {
   width: 120px;

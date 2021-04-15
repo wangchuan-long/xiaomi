@@ -18,33 +18,19 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { reqResslist } from "../../../api/address";
 export default {
   components: {},
   data() {
     return {
       chosenAddressId: "1",
-      list: [
-        {
-          id: "1",
-          name: "张三",
-          tel: "13000000000",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          isDefault: true,
-        },
-        {
-          id: "2",
-          name: "李四",
-          tel: "1310000000",
-          address: "浙江省杭州市拱墅区莫干山路 50 号",
-        },
-      ],
+      list: [],
       disabledList: [
         {
-          id: "3",
-          name: "王五",
-          tel: "1320000000",
-          address: "浙江省杭州市滨江区江南大道 15 号",
+          id: "999",
+          name: "奥特曼",
+          tel: "19999999999",
+          address: "M78星云",
         },
       ],
     };
@@ -57,14 +43,42 @@ export default {
     back() {
       this.$router.go(-1);
     },
+    // 添加地址
     onAdd() {
-      Toast("新增地址");
+      this.$router.push("/address/add");
     },
-    onEdit(item, index) {
-      Toast("编辑地址:" + index);
+    // 修改地址
+    onEdit(index) {
+      console.log(index);
+      this.$router.push({
+        name: "Edit",
+        query: { id: index.id },
+      });
+    },
+    // 初始化地址列表
+    async init() {
+      const result = await reqResslist();
+      console.log(result);
+      if (result.status === 200) {
+        result.data.addresses.forEach((v) => {
+          if (v.isDefault == true) {
+            this.chosenAddressId = v._id;
+          }
+          let obj = {
+            id: v._id,
+            name: v.receiver,
+            tel: v.mobile,
+            address: v.regions + v.address,
+            isDefault: v.isDefault,
+          };
+          this.list.unshift(obj);
+        });
+      }
     },
   },
-  created() {},
+  created() {
+    this.init();
+  },
   mounted() {},
   beforeCreate() {},
   beforeMount() {},
@@ -72,4 +86,14 @@ export default {
   updated() {},
 };
 </script>
-<style scoped></style>
+<style scoped>
+.van-address-list {
+  padding-top: 54px;
+}
+.van-address-list__bottom {
+  bottom: 20px;
+}
+.van-nav-bar .van-icon {
+  color: #9e9e9e;
+}
+</style>

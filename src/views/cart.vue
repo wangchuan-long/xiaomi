@@ -171,6 +171,7 @@ export default {
       console.log(res);
       this.products = res.data.products;
     },
+    // 跳转到详情页
     loadDetail(id) {
       this.$router.push({
         name: "Detail",
@@ -179,13 +180,13 @@ export default {
         },
       });
     },
-    //获取购物车列表
+    // 获取购物车列表
     async initCartList() {
       const result = await reqCartlist();
       console.log(result);
       this.cartproducts = result.data;
     },
-    //  增加
+    // 增加
     async addNum(item, id) {
       item.quantity++;
       const result = await reqAddCart({ product: id });
@@ -197,7 +198,7 @@ export default {
       const result = await reqAddCart({ product: id, quantity: -1 });
       console.log(result);
     },
-    //删除
+    // 删除
     async delProduct(id) {
       const result = await reqDelCart(id);
       console.log(result);
@@ -220,11 +221,6 @@ export default {
 };
 </script>
 <style scoped>
-.van-nav-bar {
-  background-color: #f2f2f2;
-  /* position: fixed; */
-  /* z-index: 999; */
-}
 ::v-deep .van-icon {
   color: #9e9e9e;
 }
