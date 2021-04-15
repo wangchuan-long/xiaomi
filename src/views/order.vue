@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="ui-line"></div>
-      <div class="fangshi">
+      <!-- <div class="fangshi">
         <ul>
           <li>
             <a href="" class="alipay">支付宝</a>
@@ -31,11 +31,41 @@
             <p>使用其他支付方式</p>
           </li>
         </ul>
-      </div>
+      </div> -->
+      <van-radio-group v-model="radio">
+        <div class="paylist">
+          <van-cell-group>
+            <div class="alipay2">
+              <van-cell title="支付宝" clickable @click="radio = '1'">
+                <template #right-icon>
+                  <van-radio name="1" />
+                </template>
+              </van-cell>
+            </div>
+            <div class="micash2">
+              <van-cell title="小米钱包" clickable @click="radio = '2'">
+                <template #right-icon>
+                  <van-radio name="2" />
+                </template>
+              </van-cell>
+            </div>
+            <div class="weixin2">
+              <van-cell title="微信" clickable @click="radio = '3'">
+                <template #right-icon>
+                  <van-radio name="3" />
+                </template>
+              </van-cell>
+            </div>
+            <van-cell>
+              <p>使用其他支付方式</p>
+            </van-cell>
+          </van-cell-group>
+        </div>
+      </van-radio-group>
       <div class="ui-line"></div>
       <div class="yunfei">
         <p>运费</p>
-        <span>快递配送（运费10元）</span>
+        <span>{{ sumPrice > 69 ? "包邮" : "快递配送（运费10元）" }}</span>
       </div>
       <van-collapse v-model="activeNames">
         <van-collapse-item title="电子普通发票" name="1"
@@ -68,7 +98,7 @@
         </p>
         <p>
           <strong>配送费用:</strong>
-          <span>0</span>
+          <span>{{ sumPrice > 69 ? "0.00" : "10.00" }}</span>
         </p>
       </div>
       <div class="ui-line"></div>
@@ -92,6 +122,7 @@ export default {
     return {
       checked: false,
       activeNames: [""],
+      radio: "1",
     };
   },
   computed: {
@@ -322,5 +353,43 @@ export default {
   color: #fff;
   font-size: 18px;
   text-align: center;
+}
+.paylist span {
+  display: block;
+  color: #333;
+  font-weight: normal;
+  text-indent: 40px;
+  font-size: 15px;
+}
+.paylist .van-cell {
+  padding: 10px 0;
+  background: none;
+}
+.paylist p {
+  text-align: center;
+  font-size: 13px;
+  font-weight: normal;
+  color: #999;
+}
+.van-cell-group .van-cell--clickable:nth-of-type(0) {
+  background: chocolate;
+}
+.paylist .alipay2 {
+  background: url(//s1.mi.com/m/images/m/pay_zfb2.png) 0 50% no-repeat;
+  background-size: 25px 25px;
+  margin: 0 20px;
+  border-bottom: 1px solid #ebedf0;
+}
+.paylist .micash2 {
+  background: url(//s1.mi.com/m/images/m/micash_wap.png) 0 50% no-repeat;
+  background-size: 25px 25px;
+  margin: 0 20px;
+  border-bottom: 1px solid #ebedf0;
+}
+.paylist .weixin2 {
+  background: url(//s1.mi.com/m/images/m/pay_wx.png) 0 50% no-repeat;
+  background-size: 25px 25px;
+  margin: 0 20px;
+  border-bottom: 1px solid #ebedf0;
 }
 </style>

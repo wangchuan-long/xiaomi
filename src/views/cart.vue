@@ -193,7 +193,7 @@ export default {
     // 结算
     goOrder() {
       if (this.sumQuantity <= 0) {
-        Toast("先选中需要结算的商品");
+        Toast.fail("先选中需要结算的商品");
       } else {
         var isList = [];
         for (var i in this.cartproducts) {
