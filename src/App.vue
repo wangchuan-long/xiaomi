@@ -45,4 +45,15 @@ body {
   width: 100%;
   height: 100%;
 }
+.van-nav-bar__content {
+  background: #f2f2f2;
+}
+.van-nav-bar__content .van-nav-bar__title {
+  color: #666666;
+  font-size: 1.1rem;
+}
+.van-nav-bar .van-icon[data-v-438f4c18] {
+  font-size: 30px;
+  color: #9e9e9e;
+}
 </style>
