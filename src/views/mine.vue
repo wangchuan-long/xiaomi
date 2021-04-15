@@ -38,17 +38,64 @@
       </van-row>
     </div>
     <div class="zw"></div>
-    <van-cell title="会员中心" is-link to="index" value="" />
+
+    <div class="cell">
+      <svg class="icon" aria-hidden="true" id="huangguan">
+        <use xlink:href="#icon-huangguan"></use>
+      </svg>
+      <div class="txt">
+        <span>会员中心</span>
+      </div>
+    </div>
+
+    <div class="cell">
+      <svg class="icon" aria-hidden="true" id="huangguan">
+        <use xlink:href="#icon-youhuiquan"></use>
+      </svg>
+      <div class="txt">
+        <span>我的优惠</span>
+      </div>
+    </div>
+    <div class="zw"></div>
+    <!-- <van-cell  title="会员中心" is-link to="index" value="" />
     <van-cell title="我的优惠" is-link to="index" value="" />
     <div class="zw"></div>
     <van-cell title="服务之家" is-link to="index" value="" />
     <van-cell title="小米之家" is-link to="index" value="" />
     <div class="zw"></div>    
-    <van-cell title="设置" is-link to="set" value="" />
+    <van-cell title="设置" is-link to="set" value="" /> -->
+
+    <div class="cell">
+      <svg class="icon" aria-hidden="true" id="huangguan">
+        <use xlink:href="#icon-fuwu"></use>
+      </svg>
+      <div class="txt">
+        <span>服务中心</span>
+      </div>
+    </div>
+
+    <div class="cell">
+      <svg class="icon" aria-hidden="true" id="huangguan">
+        <use xlink:href="#icon-dianpu"></use>
+      </svg>
+      <div class="txt">
+        <span>小米之家</span>
+      </div>
+    </div>
+    <div class="zw"></div>
+
+      <div class="cell" @click="set">
+        <svg class="icon" aria-hidden="true" id="huangguan">
+          <use xlink:href="#icon-shezhi"></use>
+        </svg>
+        <div class="txt">
+          <span>设置</span>
+        </div>
+      </div>
   </div>
 </template>
-
 <script>
+import'../assets/iconfont/iconfont'
 import {reqInfo} from '../api/user'
 import {isLogined} from '../utils/utils'
 export default {
@@ -68,6 +115,9 @@ export default {
       console.log(result);
       this.nickName = result.data.nickName;
       this.img = result.data.avatar
+    },
+    set(){
+      this.$router.push('set')
     }
   },
   created() {
@@ -82,6 +132,31 @@ export default {
 };
 </script>
 <style scoped>
+.cell{
+  width: 100%;
+  height: 3rem;
+  background-color: white;
+  position: relative;
+  border-bottom:  solid 1px #666666;
+}
+#huangguan{
+  position: absolute;
+  top: .3rem;
+  left: 0rem;
+}
+.txt{
+  position: absolute;
+  left: 2rem;
+  top: 1rem;
+}
+.icon {
+  width: 2em;
+  height: 2em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
 html,body{
   height: 100%;
   width: 100%;

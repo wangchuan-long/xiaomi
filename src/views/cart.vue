@@ -8,6 +8,13 @@
         <van-icon name="search" size="30" @click="search" />
       </template>
     </van-nav-bar>
+    <div class="noitems" v-if="isHasCart()">
+      <a>
+        <van-icon name="shopping-cart-o" size="40" color="#ababab" />
+        <span>购物车还是空的</span>
+        <em @click="goOn">去逛逛</em>
+      </a>
+    </div>
     <div class="cart-list">
       <ul>
         <li class="plist" v-for="item in cartproducts" :key="item._id">
@@ -44,7 +51,7 @@
         </li>
       </ul>
     </div>
-    <div class="point">
+    <div class="point" v-if="!isHasCart()">
       <p>温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
     </div>
     <div class="mid">
@@ -71,7 +78,12 @@
         </div>
       </div>
     </div>
-    <div class="bottom-submit">
+    <!-- <van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit">
+      <van-checkbox v-model="checked" checked-color="#ff6700"
+        >全选</van-checkbox
+      >
+    </van-submit-bar> -->
+    <div class="bottom-submit" v-if="!isHasCart()">
       <div class="box-flex">
         <div class="price-box flex">
           <span>共{{ sumQuantity }}件 金额：</span>
@@ -87,12 +99,10 @@
 </template>
 
 <script>
-import { reqProducts } from "../api/product";
-import { reqCartlist } from "../api/cart";
-import { reqAddCart } from "../api/cart";
-import { reqDelCart } from "../api/cart";
+import { Toast, Dialog } from "vant";
 import { isLogined } from "../utils/utils";
-import { Toast } from "vant";
+import { reqProducts } from "../api/product";
+import { reqCartlist, reqAddCart, reqDelCart } from "../api/cart";
 export default {
   components: {},
   data() {
@@ -149,6 +159,16 @@ export default {
     back() {
       this.$router.go(-1);
     },
+    // 是否有商品
+    isHasCart() {
+      if (this.cartproducts.length == 0) {
+        this.$route.meta.showTab = true;
+        return true;
+      } else {
+        this.$route.meta.showTab = false;
+        return false;
+      }
+    },
     // 搜索
     search() {
       this.$router.push("/search");
@@ -157,20 +177,29 @@ export default {
     goOn() {
       this.$router.push("/category");
     },
-    // 结算
-    goOrder() {
-      if (isLogined()) {
-        this.$router.push("/order");
-      } else {
-        this.$router.push("/login");
-      }
-    },
     // 获取商品列表
     async loadProduct() {
       const res = await reqProducts();
       console.log(res);
       this.products = res.data.products;
     },
+    // 结算
+    goOrder() {
+      if (this.sumQuantity <= 0) {
+        Toast("先选中需要结算的商品");
+      } else {
+        var isList = [];
+        for (var i in this.cartproducts) {
+          if (this.cartproducts[i].checked) {
+            isList.push(this.cartproducts[i]);
+          }
+        }
+        console.log(isList);
+        localStorage.setItem("CartGoods", JSON.stringify(isList));
+      }
+      this.$router.push("/order");
+    },
+    // 跳转到详情页
     loadDetail(id) {
       this.$router.push({
         name: "Detail",
@@ -179,38 +208,58 @@ export default {
         },
       });
     },
-    //获取购物车列表
+    // 获取购物车列表
     async initCartList() {
       const result = await reqCartlist();
       console.log(result);
+
       this.cartproducts = result.data;
+      this.isHasCart();
     },
-    //  增加
+    // 增加数量
     async addNum(item, id) {
       item.quantity++;
       const result = await reqAddCart({ product: id });
       console.log(result);
     },
-    // 减少
+    // 减少数量
     async subNum(item, id) {
       item.quantity--;
       const result = await reqAddCart({ product: id, quantity: -1 });
       console.log(result);
     },
-    //删除
+    // 点击删除后确认弹框
     async delProduct(id) {
+      Dialog.confirm({
+        title: "是否确认从购物车中删除此商品",
+        message: "亲,考虑清楚哦",
+      })
+        .then(() => {
+          this.delGoods(id);
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
+    // 删除方法
+    async delGoods(id) {
       const result = await reqDelCart(id);
+      if (result.data.code === "success") {
+        this.initCartList();
+      }
       console.log(result);
     },
+    //
   },
+
   created() {
-    this.loadProduct();
     if (isLogined()) {
       console.log(isLogined());
       this.initCartList();
     } else {
       Toast("您还没有登录");
     }
+    this.loadProduct();
   },
   mounted() {},
   beforeCreate() {},
@@ -220,13 +269,46 @@ export default {
 };
 </script>
 <style scoped>
-.van-nav-bar {
-  background-color: #f2f2f2;
-  /* position: fixed; */
-  /* z-index: 999; */
-}
 ::v-deep .van-icon {
   color: #9e9e9e;
+}
+.noitems {
+  height: 68px;
+  width: 100%;
+  background: #ebebeb;
+  padding-top: 46px;
+  overflow: hidden;
+}
+.noitems a {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+.van-icon-shopping-cart-o {
+  /* text-align: center;
+  padding-top: 10px; */
+  position: absolute;
+  top: 10px;
+  left: 80px;
+}
+.noitems a span {
+  display: inline-block;
+  line-height: 68px;
+  background: url(/static/img/cartnull.daaf7926f8.png) no-repeat 0;
+  background-size: auto 100%;
+
+  color: #ababab;
+}
+.noitems a em {
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0 12px;
+  line-height: 25px;
+  margin-left: 10px;
+  color: #333;
 }
 .cart-list {
   background: #f5f5f5;
@@ -241,7 +323,7 @@ export default {
   /* height: 140px; */
   background: #fff;
   overflow: hidden;
-  padding: 10px 0;
+  /* padding: 10px 0; */
 }
 .checked {
   float: left;

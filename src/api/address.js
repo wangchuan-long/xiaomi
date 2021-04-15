@@ -1,4 +1,4 @@
-import { get, post } from "../utils/request";
+import { get, post, put, del } from "../utils/request";
 
 // 添加收货地址
 export const reqAddRess = (data) => post("/api/v1/addresses", data);
@@ -10,8 +10,8 @@ export const reqResslist = (params) => get("/api/v1/addresses", params);
 export const reqRessDetail = (id) => get("/api/v1/addresses/" + id);
 
 // 修改收货地址
-export const reqChangeRess = (id, params) =>
+export const reqChangeRess = ({ id, params }) =>
   put("/api/v1/addresses/" + id, params);
 
 // 删除收货地址
-export const reqDelRess = (id) => post("/api/v1/addresses/", id);
+export const reqDelRess = (id) => del("/api/v1/addresses/" + id);
