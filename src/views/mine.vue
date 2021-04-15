@@ -39,11 +39,11 @@
     </div>
     <div class="zw"></div>
 
-    <div class="cell">
+    <div class="cell" >
       <svg class="icon" aria-hidden="true" id="huangguan">
         <use xlink:href="#icon-huangguan"></use>
       </svg>
-      <div class="txt">
+      <div class="txt" @click="huiyuan">
         <span>会员中心</span>
       </div>
     </div>
@@ -52,7 +52,7 @@
       <svg class="icon" aria-hidden="true" id="huangguan">
         <use xlink:href="#icon-youhuiquan"></use>
       </svg>
-      <div class="txt">
+      <div class="txt" @click="huiyuan">
         <span>我的优惠</span>
       </div>
     </div>
@@ -69,7 +69,7 @@
       <svg class="icon" aria-hidden="true" id="huangguan">
         <use xlink:href="#icon-fuwu"></use>
       </svg>
-      <div class="txt">
+      <div class="txt" @click="huiyuan">
         <span>服务中心</span>
       </div>
     </div>
@@ -96,8 +96,10 @@
 </template>
 <script>
 import "../assets/iconfont/iconfont";
+import {Toast} from 'vant'
 import { reqInfo } from "../api/user";
 import { isLogined } from "../utils/utils";
+// import { Form } from 'vant';
 export default {
   components: {},
   data() {
@@ -120,6 +122,13 @@ export default {
     },
     dizhi(){
       this.$router.push('/address')
+    },
+    huiyuan(){
+      Toast({
+        message: '功能暂未开发',
+        icon: '#icon-shezhi',
+        duration:1000,
+      });
     }
   },
   created() {

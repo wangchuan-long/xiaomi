@@ -113,9 +113,10 @@
         <span>共{{ sumQuantity }}件 合计：</span>
         <strong>{{ sumPrice }}</strong>
       </div>
-      <div class="order-foot-r">
+      <div class="order-foot-r" @click="goMoney">
         <p>去付款</p>
       </div>
+      
     </div>
   </div>
 </template>
@@ -176,6 +177,28 @@ export default {
           return;
         }
       });
+    },
+    goMoney(){
+       console.log(this.address);
+       this.$router.push({
+         name:'allOrder',
+         query:{
+           address:this.address
+         }
+       })
+    //  const result = await reqResslist();
+    //   console.log(result);
+    //   result.data.addresses.forEach((v) => {
+    //     if (v.isDefault) {
+    //       this.address = v;
+    //       console.log(v);
+    //       return {
+    //         v
+    //       }
+    //     }
+    //     console.log(v);
+    //   });
+      
     },
   },
   created() {

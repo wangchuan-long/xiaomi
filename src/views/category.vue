@@ -9,9 +9,16 @@
       </template>
     </van-nav-bar>
     <div class="list">
+
+      <!-- <van-sidebar v-model="activeKey" v-for="item in productsArr" :key="item._id" @change="onChange">  
+        <van-sidebar-item :title="item" />
+      </van-sidebar> -->
       <ul class="left">
-        <li v-for="item in productsArr" :key="item._id">
-          {{ item }}
+        <li v-for="(item,index)  in productsArr" :key="item._id" >
+         <div @click="btnChangeColor(index,item.id)" :class="index==Sactive?'active':''">
+            {{ item.name }}
+            <!-- {{index}} -->
+         </div>
         </li>
       </ul>
 
@@ -43,6 +50,7 @@ export default {
     return {
       products: [],
       productsArr: [],
+      Sactive:0
     };
   },
   computed: {},
@@ -61,10 +69,17 @@ export default {
       this.products = res.data.products;
       // 筛选一级标题
       this.products.forEach((v) => {
-        if (this.productsArr.some((it) => it == v.category.name) == false) {
-          this.productsArr.unshift(v.category.name);
+        if (this.productsArr.some((it) => it.name == v.category.name) == false) {
+          // console.log(v);
+          // this.productsArr.unshift(v.category.name);
+          let obj = {name:v.category.name,id:v.product_category}
+          this.productsArr.unshift(obj);
         }
-      });
+    
+      });   
+      this.productsArr.unshift({name:'全部',id:0,})
+          console.log(this.productsArr);
+
     },
     // 跳转详情
     loadDetail(id) {
@@ -73,6 +88,23 @@ export default {
         query: { id },
       });
     },
+    // 改变分类名称的颜色
+    async btnChangeColor(index,id){
+      if(index==0){
+        this.loadProduct();
+      }else{
+        const result = await reqProducts({cateId:id})
+      console.log(result,id);
+      console.log(this.Sactive);
+      if(result.status == 200){
+        this.products = result.data.products
+      }
+      }
+      // console.log(id);
+      this.Sactive=index;
+      
+    }
+  
   },
   created() {
     this.loadProduct();
@@ -86,7 +118,7 @@ export default {
 }
 .left {
   float: left;
-  width: 6rem;
+  width: 7rem;
   height: 40rem;
   background-color: white;
   border-right: solid 1px #ccc;
@@ -98,7 +130,7 @@ export default {
   text-align: center;
   line-height: 4rem;
 }
-.left li:first-child {
+.active{
   color: #fb7d34;
   font-size: 1.3rem;
 }
@@ -119,6 +151,7 @@ export default {
   flex-wrap: wrap;
   text-align: center;
   justify-content: space-around;
+  align-content: flex-start;
 }
 .shopList {
   width: 8rem;
