@@ -6,7 +6,7 @@
       <van-tabbar-item to="/cart" icon="shopping-cart-o" :badge="carts"
         >购物车</van-tabbar-item
       >
-      <van-tabbar-item to="/mine" icon="setting-o">我的</van-tabbar-item>
+      <van-tabbar-item to="/mine" icon="contact">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -60,9 +60,9 @@ export default {
 <style scoped>
 .footer {
   position: relative;
-  bottom: -1px;
 }
 .van-tabbar--fixed {
   box-shadow: #e8e9e9 0 0 10px;
+  margin-bottom: -1px;
 }
 </style>

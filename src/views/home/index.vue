@@ -1,46 +1,30 @@
 <template>
   <div class="home" style="padding-bottom: 40px">
     <div class="top_dh">
-      <img
-        src="https://s02.mifile.cn/assets/static/image/logo-mi2.png"
-        alt=""
-        class="img_mi"
-      />
-      <van-search
-        v-model="value"
-        placeholder="搜索商品名称"
-        class="searchstyle"
-        @click="jump_page"
-      />
-      <van-icon
-        name="https://b.yzcdn.cn/vant/icon-demo-1126.png"
-        @click="jump_mine"
-        class="mi_icon"
-      />
-      <!-- <van-collapse v-model="activeNames">
-        <van-collapse-item title="标题1" name="1">内容</van-collapse-item>
-      </van-collapse> -->
-      <!-- <router-link to="/home/tuijian">推荐</router-link> -->
+      <van-search show-action v-model="value" placeholder="搜索商品名称">
+        <template #left>
+          <van-icon
+            name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAyCAYAAAD2vz2aAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAATKADAAQAAAABAAAAMgAAAABQW5lOAAADMUlEQVRoBe2bPYgTQRTH/5NcFBU9ULQQtREUET3FQsXGyuLQRhDBxtqP4xBUsDsbQYRDPRGsBNsT4RoRVBA7PxpBQe1EPT/AIqJ3553J879JhjRmfS+3I9lkHmxmNvPftzO/vJmd3Z0A0UwEnBzHCwi2mo7KTjxHV3NwmK2lSR74we0Tt8naJkwdPqLAeo7hjXOsbUYmp7EEU3hLj6tVLgsYdXIsuwqoTjo/UZnwHnMbJ8AJN4bv83Enw1jHn+qd2ofDw4Ja3BnCfv68B1DFLVQwKSdwQU5h+f+sWt6ANdkIu1MV5/ALr+Uk9jYLwubyC8xzEawkuPsciw/7r0Km+QeW0BH08fOmDGEgJKzEd3cAS1oiWITfhCa8JAS07gFWh7QdQzgYkFcXRZinVMGwz4ZIuy3CwA65h1dN3US0DaLJYKk3h58cXnehhM/6g1KU0/TmsKy2VbCGyo3MD3A8GmS+P+XI1kXCXlPlXA240VrUfokNGG9Z3FW8bP90fz3Sw3/uS2UEC/AV+7l/mfDW+u/VqWA3tUGAdWSXdCOYdddxB0uxhQ1/oAblhQ47fTbrtCOB+Ua6iyijiKPcL/vvVKlgfajpRUcDS+C4a7WnFedVoJqiEs7wDiCAdTywRptvm9s+FeZKmQtgHM/e8+r5ygTN9TCwBqgnJmAIA8w6rVDVmU8ONlG4TSWuP2W9xyhKnrS2NocPnGJYbJVFrNUGAcaTj7Nxm7WV4FTzLLWXUvVCYDZbaJPr1KHGsMW60zdUAo3+m8kneD8SwEIBy76qwmerFhPeLQSw/AAr1N4sWRD0eIS52is4PTDp9S6pR+WVRZ/JMs1Pl7S22nGqG8C6F1gAWInLCMwINgKLwIwEjPIYYRGYkYBRHiMsAjMSMMpjhEVgRgJGeYywCMxIwCiPERaBGQkY5THCIjAjAaM8RlgEZiRglMcIi8CMBIzyGGFtAJtRHyPQarW6+qk1fp363L450z6TktrepgMzfVzHvI//DNuQ4rRZJHjW3EnNHeFLrh2pCl/o+P+NEib8bst0BZ5yofAhlv97dbVwHXUJd1v6ahS4K/jCJeqDVOuWqRfx6A+5CpLYo3H97gAAAABJRU5ErkJggg=="
+            size="27"
+          />
+        </template>
+        <template #action>
+          <van-icon name="contact" size="27" color="#666" to="/mine" />
+        </template>
+      </van-search>
       <!-- 顶部导航 -->
-      <van-tabbar v-model="active" :fixed="false">
-        <van-tabbar-item to="/home/tuijian" class="van_text"
-          >推荐</van-tabbar-item
-        >
-        <van-tabbar-item to="/home/phone" class="van_text"
-          >手机</van-tabbar-item
-        >
-        <van-tabbar-item to="/home/teleTv" class="van_text"
-          >电视</van-tabbar-item
-        >
-        <van-tabbar-item to="/home/zhineng" class="van_text"
-          >智能</van-tabbar-item
-        >
-        <van-tabbar-item to="/home/family_use" class="van_text"
-          >家电</van-tabbar-item
-        >
-        <van-tabbar-item to="/home/computer" class="van_text"
-          >电脑</van-tabbar-item
-        >
+      <van-tabbar
+        v-model="active"
+        :fixed="false"
+        active-color="#EE752A"
+        inactive-color="#666"
+      >
+        <van-tabbar-item to="/home/tuijian">推荐</van-tabbar-item>
+        <van-tabbar-item to="/home/phone">手机</van-tabbar-item>
+        <van-tabbar-item to="/home/teleTv">电视</van-tabbar-item>
+        <van-tabbar-item to="/home/zhineng">智能</van-tabbar-item>
+        <van-tabbar-item to="/home/family_use">家电</van-tabbar-item>
+        <van-tabbar-item to="/home/computer">电脑</van-tabbar-item>
       </van-tabbar>
 
       <router-view></router-view>
@@ -238,14 +222,45 @@ export default {
 };
 </script>
 <style scoped>
+.van-search__action .van-icon {
+  padding-top: 10px;
+}
+.van-icon > img {
+  padding: 0 10px;
+}
+.van-search--show-action {
+  padding: 0;
+  background: #f2f2f2;
+}
+.van-search__content {
+  border-radius: 17px;
+  background: #fff;
+}
+.van-tabbar--unfit {
+  background: #f2f2f2;
+  margin-top: -1px;
+}
+.van-tabbar-item {
+  font-size: 16px;
+}
+.van-tabbar-item--active {
+  background-color: #f2f2f2;
+  border-bottom: solid 2px #ee752a;
+}
+.swiper img {
+  width: 100%;
+  height: 200px;
+  padding-top: 98px;
+}
+
 .top_dh {
   width: 100%;
   height: 90px;
-  background: #f3bebe;
   position: fixed;
   top: 0;
   z-index: 1;
 }
+
 .mi_icon {
   margin-left: 350px;
   margin-top: -60px;
@@ -257,22 +272,6 @@ export default {
   height: 40px;
   margin-left: 90px;
   margin-top: -50px;
-}
-.img_mi {
-  width: 44px;
-  height: 44px;
-
-  margin-top: 10px;
-}
-
-.van_text {
-  font-size: 20px;
-}
-
-.swiper img {
-  width: 100%;
-  height: 200px;
-  padding-top: 120px;
 }
 
 .product_img img {

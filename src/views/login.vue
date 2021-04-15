@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="header">
-      <img src="../img/logo.png" alt="" />
+      <img src="../../public/mi.png" alt="" />
       <p>让每个人都能享受科技的乐趣</p>
     </div>
     <div class="from">
