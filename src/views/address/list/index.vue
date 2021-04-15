@@ -50,7 +50,8 @@ export default {
     back() {
       let routeObj = this.$store.getters.getRoute;
       // 如果从我的进来 返回到我的 否则统一返回到结算页面
-      if (routeObj.oldVal === "mine") {
+      console.log(routeObj);
+      if (routeObj.oldVal === "/mine") {
         this.$router.push("/mine");
       } else {
         this.$router.push("/order");

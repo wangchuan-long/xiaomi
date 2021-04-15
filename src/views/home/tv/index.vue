@@ -1,5 +1,5 @@
 <template>
-  <div class="phone">
+  <div class="tv">
     <div class="Products">
       <div class="p_list" v-for="item in products" :key="item._id">
         <div class="p_img">
@@ -30,7 +30,7 @@ export default {
   methods: {
     // 初始化
     async init() {
-      const result = await reqProducts({ cateId: 1000 });
+      const result = await reqProducts({ cateId: 4000 });
       if (result.status === 200) {
         this.products = result.data.products;
       }
