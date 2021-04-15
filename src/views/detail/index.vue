@@ -119,14 +119,14 @@ export default {
       Toast(option.name);
       this.showShare = false;
     },
-
+    // 轮播图
     onChange(index) {
       this.current = index;
     },
+    // 客服
     onClickIcon() {
-      console.log(Toast);
+      Toast("客服在睡觉");
     },
-
     // 加入购物车
     async onClickButton() {
       const result = await reqAddCart({ product: this.id });
