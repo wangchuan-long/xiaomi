@@ -2,17 +2,15 @@
   <div class="allOrder">
       <div class="top">
           <van-nav-bar title="全部订单" left-text="返回" left-arrow>
-          <template #right>
-            <van-icon name="search" size="18" />
-          </template>
+    
         </van-nav-bar>
       </div>
 
-      <van-row>
-        <van-col span="8">未付款</van-col>
-        <van-col span="8">已付款</van-col>
-        <van-col span="8">待收货</van-col>
-      </van-row>
+      <!-- 文字较长时，通过禁用 scrollable 属性关闭滚动播放 -->
+      <van-notice-bar
+        :scrollable="true"
+        text="我们承诺您购买的任何商品都会在付款后三日之内送达"
+      />
   </div>
 </template>
 

@@ -157,17 +157,31 @@ const router = new VueRouter({
         title: "地址",
         showTab: false,
       },
-      redirect: "/address/edit",
+      redirect: "/address/list",
       children: [
         {
           path: "list",
           name: "List",
           component: () => import("../views/address/list"),
+          meta: {
+            title: "收货地址",
+          },
         },
         {
           path: "edit",
           name: "Edit",
           component: () => import("../views/address/edit"),
+          meta: {
+            title: "修改地址",
+          },
+        },
+        {
+          path: "add",
+          name: "Add",
+          component: () => import("../views/address/add"),
+          meta: {
+            title: "添加地址",
+          },
         },
       ],
     },
