@@ -1,9 +1,14 @@
 <template>
   <div class="allOrder">
       <div class="top">
-          <van-nav-bar title="全部订单" left-text="返回" left-arrow>
-    
-        </van-nav-bar>
+          <van-nav-bar fixed title="全部订单" class="van-ellipsis">
+            <template #left >
+              <van-icon name="arrow-left" size="30" @click="onClickLeft" />
+            </template> 
+            <!-- <template #right>
+              <van-icon name="search" size="30" @click="search" />
+            </template> -->
+          </van-nav-bar>
       </div>
 
       <!-- 文字较长时，通过禁用 scrollable 属性关闭滚动播放 -->
@@ -15,15 +20,13 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
+// import { Toast } from 'vant';
 export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1)
     },
-    onClickRight() {
-      Toast('按钮');
-    },
+
   },
 }
 </script>
@@ -31,6 +34,7 @@ export default {
 <style>
 .van-nav-bar {
   background-color: #f2f2f2;
+  position: relative;
 }
 ::v-deep .van-icon {
   font-size: 30px;
@@ -48,5 +52,8 @@ export default {
 }
 .van-row{
   text-align: center;
+}
+.top{
+  position: relative;
 }
 </style>
