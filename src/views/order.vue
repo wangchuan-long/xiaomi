@@ -2,13 +2,18 @@
   <div class="order">
     <van-nav-bar fixed title="用户结算" left-text="" class="van-ellipsis">
       <template #left>
-        <van-icon name="arrow-left" size="30" @click="fanhui" />
+        <van-icon name="arrow-left" size="30" @click="back" />
       </template>
     </van-nav-bar>
     <div class="order-m">
       <div class="page-wrap" @click="goAddress">
         <div class="shouhuo">
-          <p>添加收货地址</p>
+          <p v-if="!address">添加收货地址</p>
+          <div v-if="address">
+            <p>{{ address.receiver }}</p>
+            <p>{{ address.mobile }}</p>
+            <p>{{ address.regions }}{{ address.address }}</p>
+          </div>
           <van-icon name="arrow" size="20" />
         </div>
       </div>
@@ -16,16 +21,16 @@
       <div class="fangshi">
         <ul>
           <li>
-            <a href="" class="alipay">支付宝</a>
-            <van-checkbox v-model="checked"></van-checkbox>
+            <a href="" @click.prevent class="alipay">支付宝</a>
+            <van-checkbox v-model="result[0]" name="zf"></van-checkbox>
           </li>
           <li>
-            <a href="" class="micash">小米钱包</a>
-            <van-checkbox v-model="checked"></van-checkbox>
+            <a href="" @click.prevent class="micash">小米钱包</a>
+            <van-checkbox v-model="result[1]" name="zf"></van-checkbox>
           </li>
           <li>
-            <a href="" class="vxpay">微信</a>
-            <van-checkbox v-model="checked"></van-checkbox>
+            <a href="" @click.prevent class="vxpay">微信</a>
+            <van-checkbox v-model="result[2]" name="zf"></van-checkbox>
           </li>
           <li class="xialaPay">
             <p>使用其他支付方式</p>
@@ -86,33 +91,49 @@
 </template>
 
 <script>
+import { reqResslist } from "../api/address";
 export default {
   components: {},
   data() {
     return {
-      checked: false,
+      result: [false, false, false],
       activeNames: [""],
+      address: null,
     };
   },
   computed: {},
   watch: {},
 
   methods: {
-    fanhui() {
-      history.back(); //返回历史页面
+    // 返回购物车
+    back() {
+      this.$router.push("/cart");
     },
+    // 去收货地址列表
     goAddress() {
       this.$router.push("/address");
     },
-    getGoods() {
+    // 初始化
+    init() {
       var list = localStorage.getItem("CartGoods");
-      console.log(JSON.parse(list));
       this.goods = JSON.parse(list);
-      console.log(this.goods);
+    },
+    // 获取默认的地址
+    async initAddress() {
+      const result = await reqResslist();
+      console.log(result);
+      result.data.addresses.forEach((v) => {
+        if (v.isDefault) {
+          this.address = v;
+          console.log(v);
+          return;
+        }
+      });
     },
   },
   created() {
-    this.getGoods();
+    this.init();
+    this.initAddress();
   },
   mounted() {},
   beforeCreate() {},

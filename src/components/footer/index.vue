@@ -49,4 +49,7 @@ export default {
   position: relative;
   bottom: -1px;
 }
+.van-tabbar--fixed {
+  box-shadow: #e8e9e9 0 0 10px;
+}
 </style>

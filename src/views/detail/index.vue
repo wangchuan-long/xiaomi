@@ -1,7 +1,7 @@
 <template>
   <div id="detail" v-if="obj">
     <div class="detail-header">
-      <van-icon name="arrow-left" @click="onBack" />
+      <van-icon name="arrow-left" @click="back" />
       <van-icon name="upgrade" @click="showShare = true" />
     </div>
 
@@ -50,14 +50,12 @@
         icon="wap-home-o"
         text="首页"
       />
-      <van-goods-action-icon icon="service-o" text="客服" />
       <van-goods-action-icon
-        to="Cart"
-        icon="shop-o"
-        text="购物车"
-        badge="5"
+        icon="service-o"
+        text="客服"
         @click="onClickIcon"
       />
+      <van-goods-action-icon to="Cart" icon="shop-o" text="购物车" badge="5" />
 
       <van-goods-action-button
         type="danger"
@@ -111,8 +109,8 @@ export default {
 
   methods: {
     // 返回
-    onBack() {
-      this.$router.go(-1);
+    back() {
+      this.$router.push("/");
     },
     // 分享
     onSelect(option) {
