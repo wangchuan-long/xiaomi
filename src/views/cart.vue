@@ -157,7 +157,7 @@ export default {
   methods: {
     // 返回
     back() {
-      this.$router.go(-1);
+      this.$router.push("/");
     },
     // 是否有商品
     isHasCart() {

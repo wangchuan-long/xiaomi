@@ -9,10 +9,10 @@
       <div class="page-wrap" @click="goAddress">
         <div class="shouhuo">
           <p v-if="!address">添加收货地址</p>
-          <div v-if="address">
+          <div v-if="address" class="personadd">
             <p>{{ address.receiver }}</p>
-            <p>{{ address.mobile }}</p>
-            <p>{{ address.regions }}{{ address.address }}</p>
+            <p class="pp">{{ address.mobile }}</p>
+            <span>{{ address.regions }}{{ address.address }}</span>
           </div>
           <van-icon name="arrow" size="20" />
         </div>
@@ -211,7 +211,7 @@ export default {
   padding-bottom: 57px;
 }
 .page-wrap {
-  height: 100%;
+  /* height: 100%; */
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -219,14 +219,32 @@ export default {
   background: #fff url(//s1.mi.com/m/images/m/bd1.png) 0 0 repeat-x;
   background-size: 30px 4px;
   position: relative;
-  height: 57px;
+  height: 88px;
+  overflow: hidden;
 }
+.personadd {
+  margin-top: 20px;
+}
+
 .shouhuo p {
-  font-size: 17px;
-  font-weight: 700;
+  font-family: Helvetica Neue, Tahoma, Arial, PingFangSC-Regular,
+    Hiragino Sans GB, Microsoft Yahei, sans-serif;
   margin-left: 20px;
-  line-height: 57px;
+  font-size: 17px;
+  color: #3c3c3c;
+  font-weight: 700;
+  /* line-height: 57px; */
   float: left;
+  padding-bottom: 15px;
+}
+.shouhuo .pp {
+  margin-left: 7px;
+}
+.shouhuo span {
+  font-size: 14px;
+  color: #757575;
+  float: left;
+  margin-left: 20px;
 }
 .ui-line {
   height: 10px;
@@ -239,6 +257,8 @@ export default {
   float: right;
   padding-top: 17px;
   padding-right: 10px;
+  position: absolute;
+  left: 372px;
 }
 .fangshi ul {
   overflow: hidden;
