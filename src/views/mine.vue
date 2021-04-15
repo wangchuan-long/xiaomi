@@ -203,6 +203,6 @@ html,body{
 .zw {
   width: 100%;
   height: 0.4rem;
-  background-color: rgb(214, 214, 214);
+  background-color: white;
 }
 </style>
