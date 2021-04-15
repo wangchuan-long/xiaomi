@@ -39,32 +39,51 @@ const router = new VueRouter({
         {
           path: "tuijian",
           name: "Tuijian",
-          component: () => import("../views/home/tuijian"),
+          component: () => import("../views/home/tuijian"), meta: {
+            title: "注册",
+            showTab: true,
+          },
         }, //重定向
         {
           path: "phone",
           name: "Phone",
-          component: () => import("../views/home/phone"),
+          component: () => import("../views/home/phone"), meta: {
+            title: "注册",
+            showTab: true,
+          },
+          // redirect:'/home/phone',
         },
         {
           path: "zhineng",
           name: "Zhineng",
-          component: () => import("../views/home/zhineng"),
+          component: () => import("../views/home/zhineng"), meta: {
+            title: "注册",
+            showTab: true,
+          },
         },
         {
           path: "teleTv",
           name: "TeleTv",
-          component: () => import("../views/home/teleTv"),
+          component: () => import("../views/home/teleTv"), meta: {
+            title: "注册",
+            showTab: true,
+          },
         },
         {
           path: "family_use",
           name: "Family_use",
-          component: () => import("../views/home/family_use"),
+          component: () => import("../views/home/family_use"), meta: {
+            title: "注册",
+            showTab: true,
+          },
         },
         {
           path: "computer",
           name: "Computer",
-          component: () => import("../views/home/computer"),
+          component: () => import("../views/home/computer"), meta: {
+            title: "注册",
+            showTab: true,
+          },
         },
       ],
     },

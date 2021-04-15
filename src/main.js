@@ -21,7 +21,9 @@ Vue.use(GridItem);
 //vant :list 下拉刷新 加载更多 引入
 import { List } from 'vant';
 Vue.use(List);
-
+// 引入按钮
+import { Button } from 'vant';
+Vue.use(Button);
 Vue.config.productionTip = false;
 
 // 注册时可以配置额外的选项
