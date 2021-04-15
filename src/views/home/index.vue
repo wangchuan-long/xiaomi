@@ -118,14 +118,17 @@
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/613bdeb494fa321f53df8880aac390f0.jpg?f=webp&w=537&h=762&bg=C6DCE9"
+          @click="go_Only_detail1('Note 9 Pro')"
         />
       </van-grid-item>
       <van-grid-item>
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/0e32e68b1a554cd84af032d8ee03bf6d.jpeg?f=webp&w=537&h=378&bg=C1DDE9"
+          @click="go_watch('智能手表')"
         />
         <van-image
           src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/a12873ff30a6da401d74728878625c37.jpg?f=webp&w=537&h=378&bg=D2EDFF"
+          @click="go_TvBanner('激光投影电视')"
         />
       </van-grid-item>
     </van-grid>
@@ -135,33 +138,23 @@
       />
       <van-image
         src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/f13bdcc95c41fa1807a04f69877bad09.jpg?f=webp&w=1080&h=660&bg=FFFFFF"
+        @click="go_Miyoung('小米10青春版')"
       />
     </van-grid>
 
-    <!-- <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      > -->
-    <van-cell
-      v-for="item in products"
-      :key="item._id"
-      :title="item.name"
-      @click="godetail(item._id)"
-    />
-    <!-- </van-list>
-    </van-pull-refresh> -->
-    <!-- <div class="" id="box">
-      <ul>
-        <li v-for="v in json.list">
-          <img v-bind:src="v.src" alt="" />
-          <h4>{{ v.des }}</h4>
-          <p>{{ v.price }}</p>
-        </li>
-      </ul>
-    </div> -->
+    <!-- 列表渲染 -->
+    <div class="All">
+      <div class="Product_list" v-for="item in products" :key="item._id">
+        <div class="product_img">
+          <img :src="item.image" alt="" />
+        </div>
+        <p class="p_List_text">{{ item.name }}</p>
+        <p class="p_List_text">{{ item.price }}</p>
+        <van-button type="primary" class="List_btn" @click="godetail(item._id)"
+          >点击购买</van-button
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -177,11 +170,7 @@ export default {
         "//cdn.cnbj1.fds.api.mi-img.com/mi-mall/8748ec14c5b279082202e6195b8650b3.jpg?thumb=1&w=720&h=360",
         "//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ed413f5a2078bbae305bb0941937a688.jpg?thumb=1&w=720&h=360",
       ],
-      // list: [],
-      // loading: false,
-      // finished: false,
-      // refreshing: false,
-      // page:1
+
       products: [],
     };
   },
@@ -202,11 +191,40 @@ export default {
         this.products = result.data.products;
       }
     },
+    // 点击按钮 根据id传参
     godetail(id) {
       this.$router.push({
         name: "Detail",
         query: { id },
       });
+    },
+    async go_Only_detail1(name) {
+      const result = await reqProducts({ name });
+      console.log(result);
+      if (result.status === 200) {
+        this.godetail(result.data.products[0]._id);
+      }
+    },
+    async go_watch(name) {
+      const result = await reqProducts({ name });
+      console.log(result);
+      if (result.status === 200) {
+        this.godetail(result.data.products[0]._id);
+      }
+    },
+    async go_TvBanner(name) {
+      const result = await reqProducts({ name });
+      console.log(result);
+      if (result.status === 200) {
+        this.godetail(result.data.products[0]._id);
+      }
+    },
+    async go_Miyoung(name) {
+      const result = await reqProducts({ name });
+      console.log(result);
+      if (result.status === 200) {
+        this.godetail(result.data.products[0]._id);
+      }
     },
   },
   created() {
@@ -227,21 +245,13 @@ export default {
   position: fixed;
   top: 0;
   z-index: 1;
-  /* left: 0; */
 }
 .mi_icon {
   margin-left: 350px;
   margin-top: -60px;
   font-size: 48px;
-  /* float: right; */
 }
-/* .box {
-  width: 200px;
-  height: 800px;
-  margin-top: 25px; 
-  background: forestgreen;
-  z-index: -1;
-} */
+
 .searchstyle {
   width: 220px;
   height: 40px;
@@ -251,21 +261,44 @@ export default {
 .img_mi {
   width: 44px;
   height: 44px;
-  /* float: left; */
-  /* padding: 10px; */
+
   margin-top: 10px;
 }
-/* ::v-deep van-tabbar-item__text{
-  font-size: 20px;
-} */
+
 .van_text {
   font-size: 20px;
 }
-.swiper {
-  padding-top: 114px;
-}
+
 .swiper img {
   width: 100%;
   height: 200px;
+  padding-top: 120px;
+}
+
+.product_img img {
+  width: 197px;
+  height: 180px;
+}
+.All {
+  width: 414px;
+  height: 280px;
+  margin-top: 10px;
+}
+.Product_list {
+  width: 197px;
+  height: 281px;
+  background: #d9d0bf;
+  float: left;
+  margin-left: 7px;
+  margin-top: 5px;
+  padding-bottom: 40px;
+}
+.p_List_text {
+  text-align: center;
+}
+.List_btn {
+  margin-left: 50px;
+  background: #ca5246;
+  color: white;
 }
 </style>

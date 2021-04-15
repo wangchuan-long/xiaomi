@@ -9,10 +9,10 @@
       </template>
     </van-nav-bar>
     <div class="noitems" v-if="isHasCart()">
-      <a href="/">
+      <a>
         <van-icon name="shopping-cart-o" size="40" color="#ababab" />
         <span>购物车还是空的</span>
-        <em>去逛逛</em>
+        <em @click="goOn">去逛逛</em>
       </a>
     </div>
     <div class="cart-list">
@@ -155,6 +155,11 @@ export default {
   watch: {},
 
   methods: {
+    // 返回
+    back() {
+      this.$router.go(-1);
+    },
+    // 是否有商品
     isHasCart() {
       if (this.cartproducts.length == 0) {
         this.$route.meta.showTab = true;
@@ -164,10 +169,6 @@ export default {
         return false;
       }
     },
-    // 返回
-    back() {
-      this.$router.go(-1);
-    },
     // 搜索
     search() {
       this.$router.push("/search");
@@ -176,14 +177,6 @@ export default {
     goOn() {
       this.$router.push("/category");
     },
-    // // 结算
-    // goOrder() {
-    //   if (isLogined()) {
-    //     this.$router.push("/order");
-    //   } else {
-    //     this.$router.push("/login");
-    //   }
-    // },
     // 获取商品列表
     async loadProduct() {
       const res = await reqProducts();
@@ -224,19 +217,19 @@ export default {
       this.cartproducts = result.data;
       this.isHasCart();
     },
-    // 增加
+    // 增加数量
     async addNum(item, id) {
       item.quantity++;
       const result = await reqAddCart({ product: id });
       console.log(result);
     },
-    // 减少
+    // 减少数量
     async subNum(item, id) {
       item.quantity--;
       const result = await reqAddCart({ product: id, quantity: -1 });
       console.log(result);
     },
-    //删除弹框
+    // 点击删除后确认弹框
     async delProduct(id) {
       Dialog.confirm({
         title: "是否确认从购物车中删除此商品",
@@ -249,7 +242,7 @@ export default {
           // on cancel
         });
     },
-    //删除方法
+    // 删除方法
     async delGoods(id) {
       const result = await reqDelCart(id);
       if (result.data.code === "success") {
@@ -267,14 +260,7 @@ export default {
     } else {
       Toast("您还没有登录");
     }
-
     this.loadProduct();
-    if (isLogined()) {
-      console.log(isLogined());
-      this.initCartList();
-    } else {
-      Toast("您还没有登录");
-    }
   },
   mounted() {},
   beforeCreate() {},
