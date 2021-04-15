@@ -276,7 +276,7 @@ export default {
   height: 68px;
   width: 100%;
   background: #ebebeb;
-  padding-top: 46px;
+  /* padding-top: 46px; */
   overflow: hidden;
 }
 .noitems a {

@@ -1,13 +1,15 @@
 <template>
   <div class="register">
-    <van-nav-bar fixed title="注册小米账号" class="van-ellipsis">
-      <template #left >
+    <van-nav-bar fixed title="注册" class="van-ellipsis">
+      <template #left>
         <van-icon name="arrow-left" size="30" @click="onClickLeft" />
       </template>
-      <template #right>
-        <van-icon name="search" size="30" @click="search" />
-      </template>
     </van-nav-bar>
+    <div class="top-info">
+      <p>注册小米账号</p>
+      <span>系统会根据您选择的国家/地区的法律法规储存您的个</span>
+      <span>人信息</span>
+    </div>
     <div class="reg">
       <van-uploader :after-read="afterRead" v-if="!avatar" />
       <img :src="avatar" alt="" width="90rem" height="90rem" v-else />
@@ -40,7 +42,9 @@
         >
       </van-form>
       <div class="foo">
-        <p>已阅读并同意小米帐号</p><a href="">用户协议隐私政策</a>
+        <p>
+          已阅读并同意小米帐号<a href="">用户协议</a>和<a href="">隐私政策</a>
+        </p>
       </div>
     </div>
   </div>
@@ -89,7 +93,7 @@ export default {
   color: #666666;
   font-size: 1.1rem;
 }
-.van-nav-bar .van-icon{
+.van-nav-bar .van-icon {
   font-size: 30px;
   color: #9e9e9e;
 }
@@ -99,7 +103,7 @@ html {
   font-size: 12px;
 }
 .reg {
-  margin-top: 5rem;
+  margin-top: 1.5rem;
   text-align: center;
   vertical-align: middel;
 }
@@ -112,8 +116,28 @@ button {
   margin-left: 5.5rem;
 }
 .foo p {
-  margin-top: 7rem;
-  color:#666666;
+  margin-top: 4rem;
+  font-size: 14px;
+  color: #666666;
 }
-a{color: #1989fa;}
+a {
+  color: #0b84ff;
+  font-size: 14px;
+}
+.top-info {
+  padding-top: 46px;
+}
+.top-info p {
+  font-size: 22px;
+  font-weight: 800;
+  margin-left: 5%;
+  line-height: 40px;
+  padding-top: 20px;
+}
+.top-info span {
+  color: #0b84ff;
+  font-size: 15px;
+  padding: 0 5%;
+  word-break: break-all;
+}
 </style>

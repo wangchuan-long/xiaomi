@@ -118,9 +118,9 @@ export default {
     set() {
       this.$router.push("set");
     },
-    dizhi(){
-      this.$router.push('/address')
-    }
+    dizhi() {
+      this.$router.push("/address");
+    },
   },
   created() {
     (this.userName = localStorage.getItem("userName")),
