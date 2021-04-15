@@ -134,7 +134,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function (pre, cur) {
+        .reduce(function(pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.product.price * cur.quantity;
         }, 0);
@@ -147,7 +147,7 @@ export default {
           //通过过滤，筛选出被选中的商品
           return item.checked;
         })
-        .reduce(function (pre, cur) {
+        .reduce(function(pre, cur) {
           //.reduce是js的方法，是一个累加器，pre指的是数据改变之前的初始值，cur是指当前元素
           return pre + cur.quantity;
         }, 0);
@@ -155,7 +155,7 @@ export default {
   },
   watch: {
     // 监听vuex中carts的数据变化
-    "$store.state.carts": function () {
+    "$store.state.carts": function() {
       this.carts = this.$store.getters.getCarts == 0 ? true : false;
     },
   },
@@ -163,8 +163,9 @@ export default {
   methods: {
     // 返回
     back() {
-      this.$router.push("/category");
+      this.$router.push("/");
     },
+
     // 搜索
     search() {
       this.$router.push("/search");
@@ -275,7 +276,7 @@ export default {
   height: 68px;
   width: 100%;
   background: #ebebeb;
-  padding-top: 46px;
+  /* padding-top: 46px; */
   overflow: hidden;
 }
 .noitems a {

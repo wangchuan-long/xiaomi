@@ -28,7 +28,7 @@ export default {
       disabledList: [
         {
           id: "999",
-          name: "奥特曼",
+          name: "迪迦奥特曼",
           tel: "19999999999",
           address: "M78星云",
         },
@@ -37,7 +37,7 @@ export default {
   },
   computed: {},
   watch: {
-    "$route.path": function (newVal, oldVal) {
+    "$route.path": function(newVal, oldVal) {
       console.log(newVal, oldVal);
     },
     $route(newVal, oldVal) {
