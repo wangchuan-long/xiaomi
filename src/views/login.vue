@@ -6,7 +6,7 @@
     </div>
 
     <div class="log">
-      <h3>小米账号登录</h3>
+      <h3>大米账号登录</h3>
     </div>
 
     <div class="from">
@@ -63,11 +63,11 @@ export default {
       if (result.data.code == "success") {
         Toast.success("登录成功");
         setToken(result.data.token);
-        this.$router.push("/");
-        console.log(this.userName);
         this.getCarts();
+        this.$router.push("/");
+        this.$store.commit("setActive", 0);
       } else {
-        Toast.fail("请检查用户名或者密码");
+        Toast.fail(result.data.message);
       }
     },
     // 获取一下商品数量

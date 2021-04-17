@@ -141,6 +141,7 @@ export default {
         this.isLogin();
       }
     },
+    // 其他点击
     huiyuan() {
       Toast({
         message: "功能暂未开发",
@@ -158,7 +159,7 @@ export default {
           this.$router.push("/login");
         })
         .catch(() => {
-          // on cancel
+          console.log("取消登录");
         });
     },
   },

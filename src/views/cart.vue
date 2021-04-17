@@ -164,6 +164,7 @@ export default {
     // 返回
     back() {
       this.$router.push("/");
+      this.$store.commit("setActive", 0);
     },
     // 搜索
     search() {
@@ -268,14 +269,11 @@ export default {
 };
 </script>
 <style scoped>
-::v-deep .van-icon {
-  color: #9e9e9e;
-}
 .noitems {
   height: 68px;
   width: 100%;
   background: #ebebeb;
-  /* padding-top: 46px; */
+  padding-top: 50px;
   overflow: hidden;
 }
 .noitems a {

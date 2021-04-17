@@ -40,15 +40,16 @@ export default {
       if (isLogined()) {
         const result = await reqCartlist();
         this.$store.commit("setCarts", result.data.length);
+        this.carts = this.$store.getters.getCarts;
       }
     },
   },
   created() {
+    console.log(1);
     this.getCarts();
     // 创建时获取acitve中数据
     this.active = this.$store.getters.getActive;
-    this.carts = this.$store.getters.getCarts;
-    window.document.title = "小米商城-" + this.$route.meta.title;
+    window.document.title = "大米商城-" + this.$route.meta.title;
   },
   mounted() {},
   beforeCreate() {},

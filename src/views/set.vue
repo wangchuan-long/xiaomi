@@ -58,12 +58,14 @@ export default {
     },
     // 返回
     back() {
-      this.$router.go(-1);
+      this.$router.push("/mine");
+      this.$store.commit("setActive", 3);
     },
     // 退出登录
-    async remove() {
-      await removeToken();
+    remove() {
+      removeToken();
       Toast.success("退出成功");
+      this.$store.commit("setActive", 0);
       this.$router.push("/");
     },
   },

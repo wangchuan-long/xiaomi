@@ -6,7 +6,7 @@
       </template>
     </van-nav-bar>
     <div class="top-info">
-      <p>注册小米账号</p>
+      <p>注册大米账号</p>
       <span>系统会根据您选择的国家/地区的法律法规储存您的个</span>
       <span>人信息</span>
     </div>
@@ -43,7 +43,7 @@
       </van-form>
       <div class="foo">
         <p>
-          已阅读并同意小米帐号<a href="">用户协议</a>和<a href="">隐私政策</a>
+          已阅读并同意大米帐号<a href="">用户协议</a>和<a href="">隐私政策</a>
         </p>
       </div>
     </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 import { reqReg } from "../api/user";
 export default {
   components: {},
@@ -71,8 +72,11 @@ export default {
     // 注册
     async onSubmit(values) {
       const result = await reqReg({ ...values, avatar: this.avatar });
-      if (result.status === 200) {
+      if (result.data.code === "success") {
+        Toast.success("注册成功");
         this.$router.replace("/login");
+      } else {
+        Toast.fail(result.data.message);
       }
     },
     // 返回登录页面
