@@ -97,7 +97,6 @@
       <div class="order-foot-r">
         <p @click="Pay">去付款</p>
       </div>
-      
     </div>
 
     <van-dialog
@@ -279,6 +278,7 @@ export default {
   margin-left: 7px;
 }
 .shouhuo span {
+  width: 160px;
   font-size: 14px;
   color: #757575;
   float: left;

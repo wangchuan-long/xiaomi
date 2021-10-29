@@ -41,7 +41,7 @@
 
     <van-goods-action>
       <van-goods-action-icon
-        to="/"
+        @click="goHome"
         loading="true"
         icon="wap-home-o"
         text="首页"
@@ -75,20 +75,10 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { Lazyload, Dialog } from "vant";
-import { Icon } from "vant";
-import { GoodsAction, GoodsActionIcon, GoodsActionButton } from "vant";
-import { Toast } from "vant";
+import { Dialog, Toast } from "vant";
 import { reqProductDetail } from "../../api/product";
-import { reqAddCart } from "../../api/cart";
+import { reqAddCart, reqCartlist } from "../../api/cart";
 import { isLogined } from "../../utils/utils";
-
-Vue.use(Icon);
-Vue.use(Lazyload);
-Vue.use(GoodsAction);
-Vue.use(GoodsActionButton);
-Vue.use(GoodsActionIcon);
 
 export default {
   components: {},
@@ -120,6 +110,10 @@ export default {
     back() {
       this.$router.go(-1);
     },
+    goHome() {
+      this.$router.push("/");
+      this.$store.commit("setActive", 0);
+    },
     // 分享
     onSelect(option) {
       Toast(option.name);
@@ -140,6 +134,8 @@ export default {
         console.log(result);
         if (result.status === 200) {
           Toast.success("加入购物车成功");
+          // this.$store.commit()
+          this.getCarts();
         }
       } else {
         Dialog.confirm({
@@ -153,6 +149,11 @@ export default {
             // on cancel
           });
       }
+    },
+    // 获取一下商品数量
+    async getCarts() {
+      const result = await reqCartlist();
+      this.$store.commit("setCarts", result.data.length);
     },
     // 初始化
     async initDate(id) {

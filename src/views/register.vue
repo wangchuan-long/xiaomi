@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 import { reqReg } from "../api/user";
 export default {
   components: {},
@@ -71,8 +72,11 @@ export default {
     // 注册
     async onSubmit(values) {
       const result = await reqReg({ ...values, avatar: this.avatar });
-      if (result.status === 200) {
+      if (result.data.code === "success") {
+        Toast.success("注册成功");
         this.$router.replace("/login");
+      } else {
+        Toast.fail(result.data.message);
       }
     },
     // 返回登录页面
