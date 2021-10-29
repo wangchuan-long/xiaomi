@@ -49,7 +49,11 @@ export default {
     this.getCarts();
     // 创建时获取acitve中数据
     this.active = this.$store.getters.getActive;
+<<<<<<< HEAD
     window.document.title = "小米商城-" + this.$route.meta.title;
+=======
+    window.document.title = "大米商城-" + this.$route.meta.title;
+>>>>>>> 4f1799998e4b62ef21d300a9ce7d6bd1e93bad30
   },
   mounted() {},
   beforeCreate() {},

@@ -31,6 +31,6 @@ new Vue({
 
 // 路由全局守卫(添加页面的标题)
 router.beforeEach((to, from, next) => {
-  window.document.title = "小米商城-" + to.meta.title;
+  window.document.title = "大米商城-" + to.meta.title;
   next();
 });

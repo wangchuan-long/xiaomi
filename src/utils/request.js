@@ -44,4 +44,4 @@ export const post = (url, data) => instance.post(url, data);
 export const del = (url, params) => instance.delete(url, { params: params });
 
 // put请求
-export const put = (url, params) => instance.put(url, { params: params });
+export const put = (url, data) => instance.put(url, data);

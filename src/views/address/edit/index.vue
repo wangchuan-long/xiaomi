@@ -49,7 +49,7 @@ export default {
         address: content.addressDetail,
         isDefault: content.isDefault,
       };
-      const result = await reqChangeRess({ id: this.id, params: obj });
+      const result = await reqChangeRess(this.id, { params: obj });
       if (result.data.code === "success") {
         Toast.success("修改成功");
         console.log(result);

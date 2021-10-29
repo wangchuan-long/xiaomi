@@ -7,7 +7,7 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      redirect: "/home/recommend",
+      redirect: "/home",
     },
     {
       path: "/register",

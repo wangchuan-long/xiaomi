@@ -6,7 +6,7 @@
     </div>
 
     <div class="log">
-      <h3>小米账号登录</h3>
+      <h3>大米账号登录</h3>
     </div>
 
     <div class="from">

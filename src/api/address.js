@@ -10,8 +10,7 @@ export const reqResslist = (params) => get("/api/v1/addresses", params);
 export const reqRessDetail = (id) => get("/api/v1/addresses/" + id);
 
 // 修改收货地址
-export const reqChangeRess = ({ id, params }) =>
-  put("/api/v1/addresses/" + id, params);
+export const reqChangeRess = (id, data) => put("/api/v1/addresses/" + id, data);
 
 // 删除收货地址
 export const reqDelRess = (id) => del("/api/v1/addresses/" + id);
